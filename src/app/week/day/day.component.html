@@ -1,9 +1,27 @@
 <div class="col-md-3 day">
     <h4>{{day}}</h4>
-    <div class="form-group">
-        <div class="row">
-            <input type="text" class="form-control">
-            <button class="btn btn-success">Добавить</button>
-        </div>
+
+    <div class="row">
+        <ul class="list-group">
+            <li class="list-group-item"
+                *ngFor="let food of foods">{{food}}</li>
+            
+        </ul>
+    </div>
+    <div class="row">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    class="form-control"
+                    id="food" 
+                    name="food" 
+                    ngModel
+                    required
+                    #food="ngModel">
+                <button class="btn btn-success"
+                        [disabled]="!f.valid">Добавить</button>
+            </div>
+        </form>
     </div>
 </div>

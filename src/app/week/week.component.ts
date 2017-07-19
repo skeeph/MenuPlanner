@@ -16,10 +16,16 @@ export class WeekComponent implements OnInit {
     "sat": "Суббота",
     "sun": "Воскресенье"
   };
+  num = -1;
 
   constructor() { }
 
   ngOnInit() {
+    this.num = this.getWeekNumber();
+  }
+
+  private getWeekNumber(): number {
+    return -1;
   }
 
 }

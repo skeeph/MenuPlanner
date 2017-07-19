@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-day',
@@ -6,12 +7,22 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./day.component.css']
 })
 export class DayComponent implements OnInit {
-  @Input() day="Понедельник";
-  @Input() code="mon";
-  
+  @Input() day = "Понедельник";
+  @Input() code = "mon";
+  @ViewChild('f') foodForm: NgForm;
+
+  foods = [
+    "Суп"
+  ]
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit(f) {    
+    this.foods.push(this.foodForm.value.food);
+    this.foodForm.reset();
   }
 
 }
