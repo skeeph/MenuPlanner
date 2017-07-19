@@ -4,23 +4,22 @@
     <div class="row">
         <ul class="list-group">
             <li class="list-group-item"
-                *ngFor="let food of foods">{{food}}</li>
+                *ngFor="let food of foods">{{food.name}}</li>
             
         </ul>
     </div>
     <div class="row">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <form>
             <div class="form-group">
-                <input 
-                    type="text" 
-                    class="form-control"
-                    id="food" 
-                    name="food" 
-                    ngModel
-                    required
-                    #food="ngModel">
-                <button class="btn btn-success"
-                        [disabled]="!f.valid">Добавить</button>
+                <ng2-completer 
+                    name="food"
+                    [inputClass]="'form-control'"
+                    [(ngModel)]="food" 
+                    [datasource]="recipes" 
+                    [minSearchLength]="0" 
+                    [clearSelected]="true" 
+                    (selected)="onRecipeSelected($event)">
+                </ng2-completer>
             </div>
         </form>
     </div>

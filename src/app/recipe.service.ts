@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Recipe } from "app/recipe.model";
 import { Product } from "app/product.model";
 
 @Injectable()
 export class RecipeService {
+  recipesChanges = new EventEmitter<Recipe[]>();
 
   recipes: Recipe[] = [
     new Recipe("Плов", [
@@ -16,6 +17,14 @@ export class RecipeService {
       { product: new Product("Соль"), quantity: 5 },
     ])
   ];
+
+  getRecipes() {
+    return this.recipes.slice();
+  }
+
+  getRandomRecipe() {
+    return this.recipes[Math.floor(Math.random() * this.recipes.length)];
+  }
 
   constructor() { }
 
