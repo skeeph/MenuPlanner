@@ -10,6 +10,7 @@ import { WeekComponent } from './week/week.component';
 import { DayComponent } from './week/day/day.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeService } from "app/recipe.service";
+import { FoodService } from "app/food.service";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RecipeService } from "app/recipe.service";
     Ng2CompleterModule
   ],
   providers: [
-    RecipeService
+    RecipeService,
+    FoodService
   ],
   bootstrap: [AppComponent]
 })

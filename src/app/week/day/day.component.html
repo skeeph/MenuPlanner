@@ -5,19 +5,19 @@
         <ul class="list-group">
             <li class="list-group-item"
                 *ngFor="let food of foods">{{food.name}}</li>
-            
+
         </ul>
     </div>
     <div class="row">
         <form>
             <div class="form-group">
-                <ng2-completer 
+                <ng2-completer
                     name="food"
                     [inputClass]="'form-control'"
-                    [(ngModel)]="food" 
-                    [datasource]="recipes" 
-                    [minSearchLength]="0" 
-                    [clearSelected]="true" 
+                    [(ngModel)]="food"
+                    [datasource]="recipes"
+                    [minSearchLength]="0"
+                    [clearSelected]="true"
                     (selected)="onRecipeSelected($event)">
                 </ng2-completer>
             </div>

@@ -26,6 +26,7 @@ export class RecipeService {
     return this.recipes[Math.floor(Math.random() * this.recipes.length)];
   }
 
+
   constructor() { }
 
 }

@@ -3,8 +3,9 @@ import { NgForm } from '@angular/forms';
 import { CompleterItem, CompleterData, CompleterService } from 'ng2-completer';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { RecipeService } from "app/recipe.service";
-import { Recipe } from "app/recipe.model";
+import { RecipeService } from 'app/recipe.service';
+import { Recipe } from 'app/recipe.model';
+import { FoodService } from "app/food.service";
 
 @Component({
   selector: 'app-day',
@@ -12,9 +13,12 @@ import { Recipe } from "app/recipe.model";
   styleUrls: ['./day.component.css']
 })
 export class DayComponent implements OnInit {
-  @Input() code = "mon";
-  @Input() day = "Понедельник";
+  @Input() code = 'mon';
+  @Input() day = 'Понедельник';
   @ViewChild('f') foodForm: NgForm;
+  foods = [
+
+  ];
 
   protected food: string;
   // protected dataService: CompleterData;
@@ -22,30 +26,27 @@ export class DayComponent implements OnInit {
   protected recipes: CompleterData;
 
   protected onSelected(item: CompleterItem) {
-    this.selectedColor = item ? item.title : "";
+    this.selectedColor = item ? item.title : '';
   }
-
-  foods = [
-
-  ]
 
   constructor(
     completerService: CompleterService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private foodService:FoodService
   ) {
     this.foods.push(this.recipeService.getRandomRecipe());
 
     this.recipes = completerService.local(
       this.recipeService.getRecipes(),
-      "name",
-      "name"
+      'name',
+      'name'
     );
     this.recipeService.recipesChanges.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = completerService.local(
           this.recipeService.getRecipes(),
-          "name",
-          "name"
+          'name',
+          'name'
         );
       }
     );
@@ -54,18 +55,14 @@ export class DayComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(f) {
-    // this.foods.push(this.foodForm.value.food);
-    // this.foodForm.reset();
-  }
-
   onRecipeSelected(selected: CompleterItem) {
     if (selected === null) {
       return;
     }
-    let food = selected.originalObject;
+    const food = selected.originalObject;
     if (!this.foods.includes(food)) {
       this.foods.push(food);
+      this.foodService.updateDay(this.code, this.foods);
     }
   }
 
