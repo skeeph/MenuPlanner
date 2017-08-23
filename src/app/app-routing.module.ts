@@ -6,7 +6,7 @@ import { RecipesComponent } from "app/recipes/recipes.component";
 
 const appRoutes: Routes = [
     { path: '', component: WeekComponent },
-    { path: 'recipes', component: RecipesComponent },
+    { path: 'recipes', loadChildren:'./recipes/recipes.module#RecipesModule' },
 ];
 
 @NgModule({
