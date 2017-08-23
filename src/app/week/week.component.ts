@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from "app/food.service";
 import { RecipeService } from "app/recipe.service";
 
+import currentWeekNumber = require('current-week-number');
+
 @Component({
   selector: 'app-week',
   templateUrl: './week.component.html',
@@ -32,7 +34,7 @@ export class WeekComponent implements OnInit {
   }
 
   private getWeekNumber(): number {
-    return -12;
+    return currentWeekNumber();;
   }
 
   onSaveClick() {
