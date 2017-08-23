@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodService } from "app/food.service";
+import { RecipeService } from "app/recipe.service";
 
 @Component({
   selector: 'app-week',
@@ -20,7 +21,8 @@ export class WeekComponent implements OnInit {
   num = -1;
 
   constructor(
-    private foodService: FoodService
+    private foodService: FoodService,
+    private recipeService: RecipeService,
   ) { }
 
   ngOnInit() {
@@ -33,9 +35,27 @@ export class WeekComponent implements OnInit {
     return -12;
   }
 
-  onSaveClick(){
+  onSaveClick() {
     this.foodService.saveFood();
-    
   }
+
+  onGenerate() {
+    for (var i in this.days) {
+      let code = this.days[i];
+      let food = [];
+      for (var k = 0; k < 2; k++) {
+        let recipe = this.recipeService.getRandomRecipe();
+        if (!food.includes(recipe)) {
+          food.push(recipe)
+        } else {
+          k--;
+        }
+      }
+      this.foodService.updateDay(code, food);
+      this.foodService.saveFood();
+    }
+  }
+
+  onClear() { }
 
 }

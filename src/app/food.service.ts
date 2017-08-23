@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable()
 export class FoodService {
   // TODO: Сохранять не полностью рецепты, а идентификаторы на них
   weekNum = -1;
   food = {};
+  foodsChanged = new EventEmitter<void>();
 
   constructor() {
   }
@@ -20,6 +21,7 @@ export class FoodService {
 
   updateDay(code: string, food: any[]) {
     this.food[this.weekNum][code] = food;
+    this.foodsChanged.emit();
   }
 
 

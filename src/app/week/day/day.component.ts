@@ -51,6 +51,12 @@ export class DayComponent implements OnInit {
         );
       }
     );
+
+    this.foodService.foodsChanged.subscribe(
+      ()=>{
+        this.foods = this.foodService.getFoodForDay(this.code);
+      }
+    );
   }
 
   ngOnInit() {
