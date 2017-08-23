@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompleterItem, CompleterData, CompleterService } from 'ng2-completer';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +23,6 @@ export class DayComponent implements OnInit {
   ];
 
   protected food: string;
-  // protected dataService: CompleterData;
   protected selectedColor: string;
   protected recipes: CompleterData;
 
@@ -43,6 +42,8 @@ export class DayComponent implements OnInit {
       'name',
       'name'
     );
+
+    //При добавлении изменении списка рецептов, изменить автодополнение
     this.recipeService.recipesChanges.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = completerService.local(

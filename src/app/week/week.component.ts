@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FoodService } from "app/food.service";
 
 @Component({
   selector: 'app-week',
@@ -18,14 +19,22 @@ export class WeekComponent implements OnInit {
   };
   num = -1;
 
-  constructor() { }
+  constructor(
+    private foodService: FoodService
+  ) { }
 
   ngOnInit() {
     this.num = this.getWeekNumber();
+    this.foodService.setWeekNum(this.num);
   }
 
   private getWeekNumber(): number {
-    return -1;
+    return -12;
+  }
+
+  onSaveClick(){
+    this.foodService.saveFood();
+    
   }
 
 }
