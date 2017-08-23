@@ -16,6 +16,8 @@ export class DayComponent implements OnInit {
   @Input() code = 'mon';
   @Input() day = 'Понедельник';
   @ViewChild('f') foodForm: NgForm;
+  isAdding: boolean = false;
+
   foods = [
 
   ];
@@ -32,7 +34,7 @@ export class DayComponent implements OnInit {
   constructor(
     completerService: CompleterService,
     private recipeService: RecipeService,
-    private foodService:FoodService
+    private foodService: FoodService
   ) {
     this.foods.push(this.recipeService.getRandomRecipe());
 
@@ -64,6 +66,6 @@ export class DayComponent implements OnInit {
       this.foods.push(food);
       this.foodService.updateDay(this.code, this.foods);
     }
+    this.isAdding = false;
   }
-
 }

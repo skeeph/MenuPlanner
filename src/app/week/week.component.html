@@ -3,20 +3,25 @@
   [day]="dayNames[day]"
   [code]="day"></app-day>-->
 <div class="row">
-    <app-day [day]="'Понедельник'" [code]="'mon'"></app-day>
-    <app-day [day]="'Вторник'" [code]="'tue'"></app-day>
-    <app-day [day]="'Среда'" [code]="'wed'"></app-day>
-    <app-day [day]="'Четверг'" [code]="'thu'"></app-day>
-</div>
-<div class="row">
-    <div class="col-md-offset-2">
-        <app-day [day]="'Пятница'" [code]="'fri'"></app-day>
-        <app-day [day]="'Суббота'" [code]="'sat'"></app-day>
-        <app-day [day]="'Воскресенье'" [code]="'sun'"></app-day>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-offset-10 col-md-4">
-        <button class="btn btn-primary">Save</button>
+    <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+            <app-day [day]="'Понедельник'" [code]="'mon'"></app-day>
+            <app-day [day]="'Вторник'" [code]="'tue'"></app-day>
+            <app-day [day]="'Среда'" [code]="'wed'"></app-day>
+            <app-day [day]="'Четверг'" [code]="'thu'"></app-day>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2">
+                <app-day [day]="'Пятница'" [code]="'fri'"></app-day>
+                <app-day [day]="'Суббота'" [code]="'sat'"></app-day>
+                <app-day [day]="'Воскресенье'" [code]="'sun'"></app-day>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-10 col-md-4">
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
     </div>
 </div>
