@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { RecipeService } from "app/recipe.service";
 
 @Injectable()
 export class FoodService {
@@ -7,7 +8,9 @@ export class FoodService {
   food = {};
   foodsChanged = new EventEmitter<void>();
 
-  constructor() {
+  constructor(
+    private recipeService: RecipeService,
+  ) {
   }
 
   private getCode() {
@@ -27,7 +30,7 @@ export class FoodService {
 
   saveFood() {
     // Сохранение в localstorage
-    localStorage.setItem(this.getCode(), JSON.stringify(this.food))
+    localStorage.setItem(this.getCode(), JSON.stringify(this.food[this.weekNum]))
     // TODO: Сохранение в REST?
     return this.food;
   }
@@ -36,7 +39,7 @@ export class FoodService {
     // Загрузка из localStorage
     let savedfood = localStorage.getItem(this.getCode());
     if (savedfood != null) {
-      this.food = JSON.parse(savedfood);
+      this.food[this.weekNum] = JSON.parse(savedfood);
       return;
     }
     // TODO: Загрузка из REST
@@ -50,5 +53,25 @@ export class FoodService {
     } else {
       return [];
     }
+  }
+
+  generateForDay(code: string) {
+    let food = [];
+    for (var k = 0; k < 2; k++) {
+      let recipe = this.recipeService.getRandomRecipe();
+      if (!food.includes(recipe)) {
+        food.push(recipe)
+      } else {
+        k--;
+      }
+    }
+    this.food[this.weekNum][code] = food;
+    this.foodsChanged.emit();
+  }
+
+  clearFood() {
+    this.food[this.weekNum] = []
+    localStorage.removeItem(this.getCode())
+    this.foodsChanged.emit();
   }
 }

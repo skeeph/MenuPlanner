@@ -40,22 +40,17 @@ export class WeekComponent implements OnInit {
   }
 
   onGenerate() {
-    for (var i in this.days) {
-      let code = this.days[i];
-      let food = [];
-      for (var k = 0; k < 2; k++) {
-        let recipe = this.recipeService.getRandomRecipe();
-        if (!food.includes(recipe)) {
-          food.push(recipe)
-        } else {
-          k--;
-        }
+    for (var code in this.days) {
+      if (this.days.hasOwnProperty(code)) {
+        var element = this.days[code];
+        this.foodService.generateForDay(element)
       }
-      this.foodService.updateDay(code, food);
-      this.foodService.saveFood();
     }
+    this.foodService.saveFood();
   }
 
-  onClear() { }
+  onClear() {
+    this.foodService.clearFood();
+  }
 
 }
