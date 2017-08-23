@@ -3,8 +3,8 @@ import { NgForm } from '@angular/forms';
 import { CompleterItem, CompleterData, CompleterService } from 'ng2-completer';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { RecipeService } from 'app/recipe.service';
-import { Recipe } from 'app/recipe.model';
+import { RecipeService } from 'app/recipes/recipe.service';
+import { Recipe } from 'app/recipes/recipe.model';
 import { FoodService } from "app/food.service";
 
 @Component({

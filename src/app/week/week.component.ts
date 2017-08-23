@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodService } from "app/food.service";
-import { RecipeService } from "app/recipe.service";
+import { RecipeService } from "app/recipes/recipe.service";
 
 import currentWeekNumber = require('current-week-number');
 

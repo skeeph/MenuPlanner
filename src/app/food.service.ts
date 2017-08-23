@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { RecipeService } from "app/recipe.service";
+import { RecipeService } from "app/recipes/recipe.service";
 
 @Injectable()
 export class FoodService {

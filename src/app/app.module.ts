@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { WeekComponent } from './week/week.component';
 import { DayComponent } from './week/day/day.component';
 import { HeaderComponent } from './header/header.component';
-import { RecipeService } from "app/recipe.service";
+import { RecipeService } from "app/recipes/recipe.service";
 import { FoodService } from "app/food.service";
 
 
