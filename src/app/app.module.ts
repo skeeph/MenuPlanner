@@ -11,6 +11,8 @@ import { DayComponent } from './week/day/day.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeService } from "app/recipes/recipe.service";
 import { FoodService } from "app/food.service";
+import { AppRoutingModule } from "app/app-routing.module";
+import { RecipesModule } from "app/recipes/recipes.module";
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { FoodService } from "app/food.service";
   imports: [
     BrowserModule,
     FormsModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    AppRoutingModule,
+    RecipesModule
   ],
   providers: [
     RecipeService,

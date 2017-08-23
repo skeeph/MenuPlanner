@@ -1,4 +1,4 @@
-import { Product } from "./product.model";
+import { Product } from "app/product.model";
 
 export class Recipe {
     name: string
