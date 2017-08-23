@@ -15,6 +15,10 @@ export class RecipeService {
     new Recipe("Стейк", [
       { product: new Product("Говядина вырезка"), quantity: 300 },
       { product: new Product("Соль"), quantity: 5 },
+    ]),
+     
+    new Recipe("Ризотто", [
+      
     ])
   ];
 

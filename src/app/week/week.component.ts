@@ -26,6 +26,7 @@ export class WeekComponent implements OnInit {
   ngOnInit() {
     this.num = this.getWeekNumber();
     this.foodService.setWeekNum(this.num);
+    this.foodService.loadFood();
   }
 
   private getWeekNumber(): number {

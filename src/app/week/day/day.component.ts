@@ -35,8 +35,6 @@ export class DayComponent implements OnInit {
     private recipeService: RecipeService,
     private foodService: FoodService
   ) {
-    this.foods.push(this.recipeService.getRandomRecipe());
-
     this.recipes = completerService.local(
       this.recipeService.getRecipes(),
       'name',
@@ -56,6 +54,7 @@ export class DayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.foods = this.foodService.getFoodForDay(this.code);
   }
 
   onRecipeSelected(selected: CompleterItem) {

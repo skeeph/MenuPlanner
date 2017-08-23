@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FoodService {
-  weekNum = -1; //TODO Исправить этот Хардкод
+  // TODO: Сохранять не полностью рецепты, а идентификаторы на них
+  weekNum = -1;
   food = {};
 
   constructor() {
   }
 
-  private getCode(){
+  private getCode() {
     return `food${this.weekNum}`
   }
 
-  setWeekNum(num:number){
+  setWeekNum(num: number) {
     this.weekNum = num;
     this.food[this.weekNum] = {};
   }
@@ -20,24 +21,32 @@ export class FoodService {
   updateDay(code: string, food: any[]) {
     this.food[this.weekNum][code] = food;
   }
-  
 
-  // TODO: После реализации сохранения данных, также нам необходимо реализовать загрузку сохраненных ранее данных
-  saveFood(){
-    // Сохранение в localstorage?
+
+  saveFood() {
+    // Сохранение в localstorage
     localStorage.setItem(this.getCode(), JSON.stringify(this.food))
-    // Сохранение в REST?
+    // TODO: Сохранение в REST?
     return this.food;
   }
 
-  loadFood(){
-    
+  loadFood() {
+    // Загрузка из localStorage
     let savedfood = localStorage.getItem(this.getCode());
-    if (savedfood!=null) {
-      this.food = savedfood;
-    } else {
-      // TODO: Загрузка из REST
+    if (savedfood != null) {
+      this.food = JSON.parse(savedfood);
+      return;
     }
+    // TODO: Загрузка из REST
   }
 
+
+  getFoodForDay(code: string) {
+    let food = this.food[this.weekNum][code];
+    if (food != null) {
+      return food;
+    } else {
+      return [];
+    }
+  }
 }
