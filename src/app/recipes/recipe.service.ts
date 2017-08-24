@@ -11,16 +11,16 @@ export class RecipeService {
     new Recipe("Плов",
       "http://ist.say7.info/img0001/18/118_0134bxr_2961_6hi.jpg",
       [
-        { product: new Product("Рис"), quantity: 150 },
-        { product: new Product("Морковь"), quantity: 50 },
+        { name:"Рис", amount: 150, unit: "g" },
+        { name:"Морковь", amount: 50, unit: "шт" },
       ],
       "Плов — составное блюдо в основном из риса и, как правило, мяса или рыбы, однако и здесь бывают исключения"),
 
     new Recipe("Стейк",
       "http://delikates.me/wp-content/uploads/2017/04/D09FD180D0B8D0B3D0BED182D0BED0B2D0BBD0B5D0BDD0B8D0B5_D181D182D0B5D0B9D0BAD0B0.jpg",
       [
-        { product: new Product("Говядина вырезка"), quantity: 300 },
-        { product: new Product("Соль"), quantity: 5 },
+        { name:"Говядина вырезка", amount: 300, unit: "g" },
+        { name:"Соль", amount: 5, unit: "g" },
       ],
       "Стейк — толстый кусок обжаренного мяса. Стейк из лучших частей говядины обычно называется просто стейком"),
 

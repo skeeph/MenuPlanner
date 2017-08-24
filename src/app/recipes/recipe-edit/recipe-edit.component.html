@@ -67,7 +67,7 @@
             [formGroupName]="i"
             *ngFor="let ingredientControl of recipeForm.get('ingredients').controls; let i = index"
             style="margin-top: 10px;">
-            <div class="col-xs-8">
+            <div class="col-xs-7">
               <input
                 type="text" 
                 class="form-control"
@@ -80,6 +80,12 @@
                 formControlName="amount">
             </div>
             <div class="col-xs-2">
+              <input
+                type="text" 
+                class="form-control"
+                formControlName="unit">
+            </div>
+            <div class="col-xs-1">
               <button 
                 class="btn btn-danger" 
                 type="button"

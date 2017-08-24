@@ -6,16 +6,18 @@ export class Recipe {
     imagePath: string
     description: string
     ingredients: {
-        product: Product,
-        quantity: number
+        name: string,
+        amount: number,
+        unit: string
     }[];
 
     constructor(
         name: string,
         imagePath?: string,
         ingredients?: {
-            product: Product,
-            quantity: number
+            name: string,
+            amount: number,
+            unit: string
         }[],
         description?: string) {
         this.name = name;
