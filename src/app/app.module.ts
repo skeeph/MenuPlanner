@@ -13,6 +13,7 @@ import { RecipeService } from "app/recipes/recipe.service";
 import { FoodService } from "app/food.service";
 import { AppRoutingModule } from "app/app-routing.module";
 import { RecipesModule } from "app/recipes/recipes.module";
+import { SharedModule } from "app/shared/shared.module";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RecipesModule } from "app/recipes/recipes.module";
     FormsModule,
     Ng2CompleterModule,
     AppRoutingModule,
-    RecipesModule
+    RecipesModule,
+    SharedModule
   ],
   providers: [
     RecipeService,
