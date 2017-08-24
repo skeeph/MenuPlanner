@@ -7,20 +7,24 @@ import { Subject } from "rxjs";
 export class RecipeService {
   recipesChanges = new Subject<Recipe[]>();
 
+  private getCode() {
+    return "recipes";
+  }
+
   recipes: Recipe[] = [
     new Recipe("Плов",
       "http://ist.say7.info/img0001/18/118_0134bxr_2961_6hi.jpg",
       [
-        { name:"Рис", amount: 150, unit: "g" },
-        { name:"Морковь", amount: 50, unit: "шт" },
+        { name: "Рис", amount: 150, unit: "g" },
+        { name: "Морковь", amount: 50, unit: "шт" },
       ],
       "Плов — составное блюдо в основном из риса и, как правило, мяса или рыбы, однако и здесь бывают исключения"),
 
     new Recipe("Стейк",
       "http://delikates.me/wp-content/uploads/2017/04/D09FD180D0B8D0B3D0BED182D0BED0B2D0BBD0B5D0BDD0B8D0B5_D181D182D0B5D0B9D0BAD0B0.jpg",
       [
-        { name:"Говядина вырезка", amount: 300, unit: "g" },
-        { name:"Соль", amount: 5, unit: "g" },
+        { name: "Говядина вырезка", amount: 300, unit: "g" },
+        { name: "Соль", amount: 5, unit: "g" },
       ],
       "Стейк — толстый кусок обжаренного мяса. Стейк из лучших частей говядины обычно называется просто стейком"),
 
@@ -57,6 +61,21 @@ export class RecipeService {
   deletRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipesChanges.next(this.recipes.slice());
+  }
+
+  saveRecipes() {
+    localStorage.setItem(this.getCode(), JSON.stringify(this.recipes))
+    // TODO: Save to REST
+  }
+
+  loadRecipes() {
+    // Загрузка из localStorage
+    let saveRecipes = localStorage.getItem(this.getCode());
+    if (saveRecipes != null) {
+      this.recipes = JSON.parse(saveRecipes);
+      return;
+    }
+    // TODO: Загрузка из REST
   }
 
 
