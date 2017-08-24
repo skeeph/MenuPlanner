@@ -32,7 +32,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   onSaveRecipes(){
     this.recipeService.saveRecipes();
-    console.log("saved")
   }
 
 }

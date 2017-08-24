@@ -11,21 +11,21 @@
             <app-day [day]="'Четверг'" [code]="'thu'"></app-day>
         </div>
         <div class="row">
-            <div class="col-md-offset-2">
-                <app-day [day]="'Пятница'" [code]="'fri'"></app-day>
-                <app-day [day]="'Суббота'" [code]="'sat'"></app-day>
-                <app-day [day]="'Воскресенье'" [code]="'sun'"></app-day>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-offset-7 col-md-1">
-                <button class="btn btn-primary" (click)="onSaveClick()">Save</button>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-success" (click)="onGenerate()">Generate</button>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-danger" (click)="onClear()">Clear menu</button>
+
+            <app-day [day]="'Пятница'" [code]="'fri'"></app-day>
+            <app-day [day]="'Суббота'" [code]="'sat'"></app-day>
+            <app-day [day]="'Воскресенье'" [code]="'sun'"></app-day>
+            <div class="col-md-3">
+                <h4>Actions</h4>
+                <div class="row">
+                    <button class="btn btn-primary btn-block" (click)="onSaveClick()">Save</button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-block btn-success" (click)="onGenerate()">Generate</button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-block btn-danger" (click)="onClear()">Clear menu</button>
+                </div>
             </div>
         </div>
 
