@@ -12,6 +12,8 @@ export class Recipe {
         unit: string
     }[];
 
+    // TODO: Public and private recipes
+i
     generateId(){
         this.id = UUID.UUID()
     }
