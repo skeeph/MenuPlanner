@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Recipe } from "./recipe.model";
 import { Product } from "app/product.model";
 import { Subject } from "rxjs";
+import { Http, Response } from "@angular/http";
 
 @Injectable()
 export class RecipeService {
@@ -59,14 +60,17 @@ export class RecipeService {
     this.recipesChanges.next(this.recipes.slice());
   }
 
-  deletRecipe(index: number) {
+  deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipesChanges.next(this.recipes.slice());
   }
 
   saveRecipes() {
     localStorage.setItem(this.getCode(), JSON.stringify(this.recipes))
-    // TODO: Save to REST
+    this.saveRecipesRest().subscribe(
+      (response: Response) => { console.log(response); }
+    );;
+    
   }
 
   loadRecipes() {
@@ -80,6 +84,14 @@ export class RecipeService {
   }
 
 
-  constructor() { }
+  constructor(
+    private http: Http
+  ) { }
+
+  private url = "http://localhost:5000/recipes"
+  private saveRecipesRest() {
+    console.log(this.url);
+    return this.http.post(this.url, this.recipes)
+  }
 
 }
