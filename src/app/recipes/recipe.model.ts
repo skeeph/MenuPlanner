@@ -1,7 +1,8 @@
 import { Product } from "app/product.model";
+import { UUID } from 'angular2-uuid';
 
 export class Recipe {
-    // TODO: Единицы измерения
+    id: string
     name: string
     imagePath: string
     description: string
@@ -10,6 +11,10 @@ export class Recipe {
         amount: number,
         unit: string
     }[];
+
+    generateId(){
+        this.id = UUID.UUID()
+    }
 
     constructor(
         name: string,
@@ -20,9 +25,10 @@ export class Recipe {
             unit: string
         }[],
         description?: string) {
+        this.generateId();
         this.name = name;
         this.imagePath = imagePath;
         this.ingredients = ingredients;
         this.description = description;
-    }
+    }    
 }

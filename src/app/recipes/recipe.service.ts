@@ -49,6 +49,7 @@ export class RecipeService {
   }
 
   addRecipe(recipe: Recipe) {
+    recipe.generateId();
     this.recipes.push(recipe);
     this.recipesChanges.next(this.recipes.slice());
   }
