@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SettingsService {
 
-  settings = ["project_name", "apikey"]
+  settings = ["project_name", "apikey", "project_id"]
 
   set(key: string, val: string) {
     if (!this.settings.includes(key)) {
