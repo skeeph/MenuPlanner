@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { WeekComponent } from "app/week/week.component";
 import { RecipesComponent } from "app/recipes/recipes.component";
 
 
