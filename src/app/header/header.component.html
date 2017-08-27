@@ -10,18 +10,7 @@
                 <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <!--<ng-template [ngIf]="!authService.isAuthed()">
-                    <li><a routerLink="/signin">Login</a></li>
-                    <li><a routerLink="/signup">Register</a></li>
-                </ng-template>
-                 <li><a (click)="onLogout()" *ngIf="authService.isAuthed()">Logout</a></li>-->
-                <!--<li class="dropdown" appDropdown *ngIf="authService.isAuthed()">
-                    <a style="cursor: pointer;" role="button" class="dropdown-toggle">Manage <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a style="cursor: pointer;">Save the data</a></li>
-                        <li><a style="cursor: pointer;">Fetch the data</a></li>
-                    </ul>
-                </li>-->
+                <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-wrench"></span></a></li>
             </ul>
         </div>
     </div>

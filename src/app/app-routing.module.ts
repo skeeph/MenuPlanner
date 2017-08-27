@@ -6,6 +6,7 @@ import { RecipesComponent } from "app/recipes/recipes.component";
 const appRoutes: Routes = [
     { path: '', loadChildren:'./food/food.module#FoodModule' },
     { path: 'recipes', loadChildren:'./recipes/recipes.module#RecipesModule' },
+    { path: 'settings', loadChildren:'./settings/settings.module#SettingsModule' },
     
 ];
 

@@ -1,0 +1,15 @@
+<div class="col-md-offset-2 col-md-8">
+    <form (ngSubmit)="onSave(f)" [formGroup]="settingsForm">
+        <div class="form-group">
+            <label for="apikey">Your Todoist API Key</label>
+            <input class="form-control" type="text" formControlName="apikey" id="apikey">
+        </div>
+
+        <div class="form-group">
+            <label for="project_name">Todoist shoping project name</label>
+            <input class="form-control" type="text" formControlName="project_name" id="project_name">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>

@@ -15,6 +15,8 @@ import { SharedModule } from "app/shared/shared.module";
 import { HttpModule } from "@angular/http";
 import { TodoistService } from "app/food/todoist.service";
 import { FoodModule } from "app/food/food.module";
+import { SettingsModule } from "app/settings/settings.module";
+import { SettingsService } from "app/settings/settings.service";
 
 
 @NgModule({
@@ -29,12 +31,14 @@ import { FoodModule } from "app/food/food.module";
     RecipesModule,
     SharedModule,
     HttpModule,
-    FoodModule
+    FoodModule,
+    SettingsModule
   ],
   providers: [
     RecipeService,
     FoodService,
-    TodoistService
+    TodoistService,
+    SettingsService
   ],
   bootstrap: [AppComponent]
 })
