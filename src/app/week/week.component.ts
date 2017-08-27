@@ -62,4 +62,9 @@ export class WeekComponent implements OnInit {
     this.foodService.clearFood();
   }
 
+  onShoppingClick() {
+    let products = this.foodService.getProducts();
+    console.log(products);
+  }
+
 }
