@@ -28,6 +28,7 @@ export class WeekComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.recipeService.loadRecipes();
     this.num = this.getWeekNumber();
     this.foodService.setWeekNum(this.num);
     this.foodService.loadFood();
@@ -49,6 +50,12 @@ export class WeekComponent implements OnInit {
       }
     }
     this.foodService.saveFood();
+  }
+
+  onShoppingClick() {
+    let products = this.foodService.getProducts();
+    console.log(products);
+    
   }
 
   onClear() {

@@ -74,4 +74,23 @@ export class FoodService {
     localStorage.removeItem(this.getCode())
     this.foodsChanged.emit();
   }
+
+  getProducts(){
+    let result = [];
+    let ingredients = [];
+    let now = this.food[this.weekNum];
+    let days = Object.keys(now);
+    for (let dn in days) {
+      let food = now[days[dn]];
+      for(let i=0; i<food.length; i++){
+        ingredients = ingredients.concat(food[i].ingredients)
+      }
+    }
+    for (var i = 0; i < ingredients.length; i++) {
+      let ing = ingredients[i];
+      result.push(`${ing.name} - ${ing.amount} ${ing.unit}`);
+    }
+    return result;
+    
+  }
 }
