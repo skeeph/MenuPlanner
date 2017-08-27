@@ -3,6 +3,7 @@ import { FoodService } from "app/food.service";
 import { RecipeService } from "app/recipes/recipe.service";
 
 import currentWeekNumber = require('current-week-number');
+import { TodoistService } from "app/todoist.service";
 
 @Component({
   selector: 'app-week',
@@ -25,6 +26,7 @@ export class WeekComponent implements OnInit {
   constructor(
     private foodService: FoodService,
     private recipeService: RecipeService,
+    private todoistService: TodoistService
   ) { }
 
   ngOnInit() {
@@ -52,19 +54,13 @@ export class WeekComponent implements OnInit {
     this.foodService.saveFood();
   }
 
-  onShoppingClick() {
-    let products = this.foodService.getProducts();
-    console.log(products);
-    
-  }
-
   onClear() {
     this.foodService.clearFood();
   }
 
   onShoppingClick() {
     let products = this.foodService.getProducts();
-    console.log(products);
+    this.todoistService.saveTasks(products);
   }
 
 }

@@ -15,6 +15,7 @@ import { AppRoutingModule } from "app/app-routing.module";
 import { RecipesModule } from "app/recipes/recipes.module";
 import { SharedModule } from "app/shared/shared.module";
 import { HttpModule } from "@angular/http";
+import { TodoistService } from "app/todoist.service";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { HttpModule } from "@angular/http";
   ],
   providers: [
     RecipeService,
-    FoodService
+    FoodService,
+    TodoistService
   ],
   bootstrap: [AppComponent]
 })
