@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodService } from "app/food.service";
+import { FoodService } from "app/food/food.service";
 import { RecipeService } from "app/recipes/recipe.service";
-
+import { TodoistService } from "app/food/todoist.service";
 import currentWeekNumber = require('current-week-number');
-import { TodoistService } from "app/todoist.service";
+
 
 @Component({
-  selector: 'app-week',
-  templateUrl: './week.component.html',
-  styleUrls: ['./week.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class WeekComponent implements OnInit {
+export class MenuComponent implements OnInit {
+
   days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   dayNames = {
     "mon": "Понедельник",
@@ -23,6 +24,7 @@ export class WeekComponent implements OnInit {
   };
   num = -1;
 
+
   constructor(
     private foodService: FoodService,
     private recipeService: RecipeService,
@@ -30,7 +32,6 @@ export class WeekComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.recipeService.loadRecipes();
     this.num = this.getWeekNumber();
     this.foodService.setWeekNum(this.num);
     this.foodService.loadFood();
@@ -62,5 +63,4 @@ export class WeekComponent implements OnInit {
     let products = this.foodService.getProducts();
     this.todoistService.saveTasks(products);
   }
-
 }

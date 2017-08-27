@@ -10,29 +10,28 @@ import { WeekComponent } from './week/week.component';
 import { DayComponent } from './week/day/day.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeService } from "app/recipes/recipe.service";
-import { FoodService } from "app/food.service";
+import { FoodService } from "app/food/food.service";
 import { AppRoutingModule } from "app/app-routing.module";
 import { RecipesModule } from "app/recipes/recipes.module";
 import { SharedModule } from "app/shared/shared.module";
 import { HttpModule } from "@angular/http";
-import { TodoistService } from "app/todoist.service";
+import { TodoistService } from "app/food/todoist.service";
+import { FoodModule } from "app/food/food.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeekComponent,
-    DayComponent,
     HeaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    Ng2CompleterModule,
     AppRoutingModule,
     RecipesModule,
     SharedModule,
-    HttpModule
+    HttpModule,
+    FoodModule
   ],
   providers: [
     RecipeService,

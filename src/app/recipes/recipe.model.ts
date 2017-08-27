@@ -1,4 +1,3 @@
-import { Product } from "app/product.model";
 import { UUID } from 'angular2-uuid';
 
 export class Recipe {
@@ -13,7 +12,6 @@ export class Recipe {
     }[];
 
     // TODO: Public and private recipes
-i
     generateId(){
         this.id = UUID.UUID()
     }

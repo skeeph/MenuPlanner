@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from "./recipe.model";
-import { Product } from "app/product.model";
 import { Subject } from "rxjs";
 import { Http, Response } from "@angular/http";
 
@@ -45,9 +44,6 @@ export class RecipeService {
 
   saveRecipes() {
     localStorage.setItem(this.getCode(), JSON.stringify(this.recipes))
-    this.saveRecipesRest().subscribe(
-      (response: Response) => { console.log(response); }
-    );;
 
   }
 
@@ -74,8 +70,7 @@ export class RecipeService {
   ) { }
 
   private url = "http://localhost:5000/recipes"
-  private saveRecipesRest() {
-    console.log(this.url);
+  saveRecipesRest() {
     return this.http.post(this.url, this.recipes)
   }
 

@@ -5,8 +5,9 @@ import { RecipesComponent } from "app/recipes/recipes.component";
 
 
 const appRoutes: Routes = [
-    { path: '', component: WeekComponent },
+    { path: '', loadChildren:'./food/food.module#FoodModule' },
     { path: 'recipes', loadChildren:'./recipes/recipes.module#RecipesModule' },
+    
 ];
 
 @NgModule({

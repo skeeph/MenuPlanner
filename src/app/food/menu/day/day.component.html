@@ -1,0 +1,31 @@
+<div class="col-md-3 day" style="height: 200pt">
+    <h4>{{day}}</h4>
+
+    <div class="row" (click)="isAdding=!isAdding">
+        <ul class="list-group">
+            <!--TODO: Delete Recipe on Click-->
+            <li class="list-group-item" *ngFor="let food of foods">{{food.name}}</li>
+
+        </ul>
+    </div>
+
+    <div class="row">
+      <!--<button *ngIf="!isAdding"
+            (click)="isAdding=!isAdding" class="btn btn-primary">Add</button>-->
+      <form *ngIf="isAdding">
+          <div class="form-group">
+              <ng2-completer
+                  name="food"
+                  [inputClass]="'form-control'"
+                  [(ngModel)]="food"
+                  [datasource]="recipes"
+                  [minSearchLength]="0"
+                  [clearSelected]="true"
+                  (selected)="onRecipeSelected($event)">
+              </ng2-completer>
+              <button class="btn btn-danger" (click)="isAdding=!isAdding">Cancel</button>
+          </div>
+          
+      </form>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+      <div class="row">
+          <menu-day [day]="'Понедельник'" [code]="'mon'"></menu-day>
+          <menu-day [day]="'Вторник'" [code]="'tue'"></menu-day>
+          <menu-day [day]="'Среда'" [code]="'wed'"></menu-day>
+          <menu-day [day]="'Четверг'" [code]="'thu'"></menu-day>
+      </div>
+      <div class="row">
+
+          <menu-day [day]="'Пятница'" [code]="'fri'"></menu-day>
+          <menu-day [day]="'Суббота'" [code]="'sat'"></menu-day>
+          <menu-day [day]="'Воскресенье'" [code]="'sun'"></menu-day>
+          <div class="col-md-3">
+              <h4>Actions</h4>
+              <div class="row">
+                  <button class="btn btn-info btn-block" (click)="onShoppingClick()">To shopping list</button>
+              </div>
+              <div class="row">
+                  <button class="btn btn-primary btn-block" (click)="onSaveClick()">Save</button>
+              </div>
+              <div class="row">
+                  <button class="btn btn-block btn-success" (click)="onGenerate()">Generate</button>
+              </div>
+              <div class="row">
+                  <button class="btn btn-block btn-danger" (click)="onClear()">Clear menu</button>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>

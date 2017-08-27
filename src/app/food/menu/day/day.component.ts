@@ -1,30 +1,29 @@
-import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { CompleterItem, CompleterData, CompleterService } from 'ng2-completer';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import { RecipeService } from 'app/recipes/recipe.service';
-import { Recipe } from 'app/recipes/recipe.model';
-import { FoodService } from "app/food.service";
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { CompleterData, CompleterItem, CompleterService } from "ng2-completer";
+import { NgForm } from "@angular/forms";
+import { RecipeService } from "app/recipes/recipe.service";
+import { FoodService } from "app/food/food.service";
+import { Recipe } from "app/recipes/recipe.model";
 
 @Component({
-  selector: 'app-day',
+  selector: 'menu-day',
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.css']
 })
 export class DayComponent implements OnInit {
   @Input() code = 'mon';
   @Input() day = 'Понедельник';
+
+  protected food: string;
+  protected selectedColor: string;
+  protected recipes: CompleterData;
+
   @ViewChild('f') foodForm: NgForm;
   isAdding: boolean = false;
 
   foods = [
 
   ];
-
-  protected food: string;
-  protected selectedColor: string;
-  protected recipes: CompleterData;
 
   protected onSelected(item: CompleterItem) {
     this.selectedColor = item ? item.title : '';
@@ -53,7 +52,7 @@ export class DayComponent implements OnInit {
     );
 
     this.foodService.foodsChanged.subscribe(
-      ()=>{
+      () => {
         this.foods = this.foodService.getFoodForDay(this.code);
       }
     );
@@ -74,4 +73,5 @@ export class DayComponent implements OnInit {
     }
     this.isAdding = false;
   }
+
 }
