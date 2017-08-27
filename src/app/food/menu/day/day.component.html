@@ -10,23 +10,18 @@
     </div>
 
     <div class="row">
-      <!--<button *ngIf="!isAdding"
-            (click)="isAdding=!isAdding" class="btn btn-primary">Add</button>-->
-      <form *ngIf="isAdding">
-          <div class="form-group">
-              <ng2-completer
-                  name="food"
-                  [inputClass]="'form-control'"
-                  [(ngModel)]="food"
-                  [datasource]="recipes"
-                  [minSearchLength]="0"
-                  [clearSelected]="true"
-                  (selected)="onRecipeSelected($event)">
-              </ng2-completer>
+        <button type="button" *ngIf="!isAdding" (click)="isAdding=!isAdding" 
+        class="btn btn-block btn-default btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <form *ngIf="isAdding">
+            <div class="form-group">
+                <ng2-completer name="food" [inputClass]="'form-control'" [(ngModel)]="food" [datasource]="recipes" [minSearchLength]="0" [clearSelected]="true" (selected)="onRecipeSelected($event)">
+                </ng2-completer>
 
-              <button class="btn btn-danger" (click)="isAdding=!isAdding">Cancel</button>
-          </div>
-          
-      </form>
-  </div>
+                <button class="btn btn-danger" (click)="isAdding=!isAdding">Cancel</button>
+            </div>
+
+        </form>
+    </div>
 </div>
