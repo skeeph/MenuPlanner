@@ -42,9 +42,8 @@ export class MenuComponent implements OnInit {
   }
 
   onSaveClick() {
-    // this.foodService.saveFood();
-    this.foodService.loadRest();
-    // FIXME: 
+    this.foodService.saveFood();
+    this.foodService.saveRest(); // TODO: Test this
   }
 
   onGenerate() {
@@ -64,5 +63,7 @@ export class MenuComponent implements OnInit {
   onShoppingClick() {
     let products = this.foodService.getProducts();
     this.todoistService.saveTasks(products);
+    console.log(products);
+    
   }
 }

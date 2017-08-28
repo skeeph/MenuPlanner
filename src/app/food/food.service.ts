@@ -15,8 +15,11 @@ export class FoodService {
   ) {
   }
 
-  private getCode() {
-    return `food${this.weekNum}`
+  private getCode(num?: number) {
+    if (num == null) {
+      num = this.weekNum;
+    }
+    return `food${num}`
   }
 
   setWeekNum(num: number) {
@@ -32,34 +35,45 @@ export class FoodService {
 
   saveFood() {
     // Сохранение в localstorage
-    localStorage.setItem(this.getCode(), JSON.stringify(this.food[this.weekNum]))
-    // TODO: Сохранение в REST?
+    localStorage.setItem("food", JSON.stringify(this.food))
     return this.food;
   }
 
   loadFood() {
     // Загрузка из localStorage
-    let savedfood = localStorage.getItem(this.getCode());
+    let savedfood = localStorage.getItem("food");
     if (savedfood != null) {
-      this.food[this.weekNum] = JSON.parse(savedfood);
+      this.food = JSON.parse(savedfood);
       return;
     }
-    // TODO: Загрузка из REST
+    else {
+      // Загрузка из REST
+      this.loadRest().subscribe(
+        (resp: Response) => {
+          let respfood = resp.json()["food"]
+          if (respfood!=null) {
+            this.food = respfood;  
+          } else {
+            this.food = {};
+          }
+          
+          this.saveFood();
+          this.foodsChanged.emit();
+        }
+      );
+    }
+
   }
 
   private url = "https://pushreceiver-26e46.firebaseio.com/food.json"
   loadRest() {
-    this.http.get(this.url).subscribe(
-      (resp: Response) => {
-        console.log(resp.json());
-
-      }
-    );
+    return this.http.get(this.url);
   }
 
   saveRest() {
-    let code = this.getCode();
-    let temp = { code: this.food[this.weekNum] }
+    let temp = {}
+    temp["food"] = this.food;
+
     this.http.put(this.url, temp).subscribe(
       (resp: Response) => {
         console.log(resp.json());
@@ -92,6 +106,7 @@ export class FoodService {
   clearFood() {
     this.food[this.weekNum] = {}
     localStorage.removeItem(this.getCode())
+    this.saveRest(); 
     this.foodsChanged.emit();
   }
 
@@ -108,7 +123,7 @@ export class FoodService {
     }
     let ing_amount = {}
     //TODO: Продумать ситуацию, когда в разных рецептах 1 ингредиент имеет разные единицы измерения
-    let units = {} 
+    let units = {}
     for (var i = 0; i < ingredients.length; i++) {
       let ing = ingredients[i];
 
@@ -121,11 +136,11 @@ export class FoodService {
       }
       ing_amount[ing.name] += ing.amount;
     }
-    
+
     for (var ing in ing_amount) {
       if (ing_amount.hasOwnProperty(ing)) {
         var amount = ing_amount[ing];
-        result.push(`${ing} - ${amount} ${units[ing]}`);        
+        result.push(`${ing} - ${amount} ${units[ing]}`);
       }
     }
     return result;
