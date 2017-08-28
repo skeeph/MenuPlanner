@@ -54,14 +54,14 @@ export class RecipeService {
       this.recipes = JSON.parse(saveRecipes);
       return;
     }
-    let resp = this.loadRecipesRest();
-    resp.subscribe(
-      (recipes: Recipe[]) => {
-        this.recipes = recipes;
-        this.recipesChanges.next(this.recipes.slice());
-        this.saveRecipes();
-      }
-    )
+    // let resp = this.loadRecipesRest();
+    // resp.subscribe(
+    //   (recipes: Recipe[]) => {
+    //     this.recipes = recipes;
+    //     this.recipesChanges.next(this.recipes.slice());
+    //     this.saveRecipes();
+    //   }
+    // )
   }
 
 
