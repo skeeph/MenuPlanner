@@ -42,7 +42,9 @@ export class MenuComponent implements OnInit {
   }
 
   onSaveClick() {
-    this.foodService.saveFood();
+    // this.foodService.saveFood();
+    this.foodService.loadRest();
+    // FIXME: 
   }
 
   onGenerate() {

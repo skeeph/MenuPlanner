@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
+import { Http, Response } from "@angular/http";
 
 @Injectable()
 export class FoodService {
@@ -10,6 +11,7 @@ export class FoodService {
 
   constructor(
     private recipeService: RecipeService,
+    private http: Http
   ) {
   }
 
@@ -45,7 +47,25 @@ export class FoodService {
     // TODO: Загрузка из REST
   }
 
+  private url = "https://pushreceiver-26e46.firebaseio.com/food.json"
+  loadRest() {
+    this.http.get(this.url).subscribe(
+      (resp: Response) => {
+        console.log(resp.json());
 
+      }
+    );
+  }
+
+  saveRest() {
+    let code = this.getCode();
+    let temp = { code: this.food[this.weekNum] }
+    this.http.put(this.url, temp).subscribe(
+      (resp: Response) => {
+        console.log(resp.json());
+      }
+    )
+  }
   getFoodForDay(code: string) {
     let food = this.food[this.weekNum][code];
     if (food != null) {
@@ -76,7 +96,6 @@ export class FoodService {
   }
 
   getProducts() {
-    // TODO: Объединять похожие продуктыs
     let result = [];
     let ingredients = [];
     let now = this.food[this.weekNum];
@@ -87,9 +106,27 @@ export class FoodService {
         ingredients = ingredients.concat(food[i].ingredients)
       }
     }
+    let ing_amount = {}
+    //TODO: Продумать ситуацию, когда в разных рецептах 1 ингредиент имеет разные единицы измерения
+    let units = {} 
     for (var i = 0; i < ingredients.length; i++) {
       let ing = ingredients[i];
-      result.push(`${ing.name} - ${ing.amount} ${ing.unit}`);
+
+      if (ing_amount[ing.name] == null) {
+        ing_amount[ing.name] = 0
+      }
+
+      if (units[ing.name] == null) {
+        units[ing.name] = ing.unit
+      }
+      ing_amount[ing.name] += ing.amount;
+    }
+    
+    for (var ing in ing_amount) {
+      if (ing_amount.hasOwnProperty(ing)) {
+        var amount = ing_amount[ing];
+        result.push(`${ing} - ${amount} ${units[ing]}`);        
+      }
     }
     return result;
   }
