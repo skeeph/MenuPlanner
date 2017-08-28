@@ -76,6 +76,7 @@ export class FoodService {
   }
 
   getProducts() {
+    // TODO: Объединять похожие продуктыs
     let result = [];
     let ingredients = [];
     let now = this.food[this.weekNum];

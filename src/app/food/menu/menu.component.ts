@@ -53,7 +53,6 @@ export class MenuComponent implements OnInit {
       }
     }
     this.foodService.saveFood();
-    console.log(this.todoistService.getProjectId());
   }
 
   onClear() {
