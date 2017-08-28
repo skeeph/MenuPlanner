@@ -54,14 +54,16 @@ export class RecipeService {
       this.recipes = JSON.parse(saveRecipes);
       return;
     }
-    // let resp = this.loadRecipesRest();
-    // resp.subscribe(
-    //   (recipes: Recipe[]) => {
-    //     this.recipes = recipes;
-    //     this.recipesChanges.next(this.recipes.slice());
-    //     this.saveRecipes();
-    //   }
-    // )
+    let resp = this.loadRecipesRest();
+    resp.subscribe(
+      (recipes: Recipe[]) => {
+        console.log(recipes);
+        
+        this.recipes = recipes;
+        this.recipesChanges.next(this.recipes.slice());
+        this.saveRecipes();
+      }
+    )
   }
 
 
@@ -69,13 +71,26 @@ export class RecipeService {
     private http: Http
   ) { }
 
-  private url = "http://localhost:5000/recipes"
+  private url = "https://pushreceiver-26e46.firebaseio.com/recipes.json";
+
+  private getUrl(): string {
+    // const tk = this.authService.getToken();
+    return `${this.url}`
+  }
   saveRecipesRest() {
-    return this.http.post(this.url, this.recipes)
+    return this.http.put(this.getUrl(), this.recipes)
   }
 
   private loadRecipesRest() {
-    return this.http.get(this.url)
-      .map(res => res.json());
+    return this.http.get(this.getUrl())
+    .map(
+    (response: Response) => {
+        const recipes: Recipe[] = response.json()
+        for (let recipe of recipes) {
+            if (!recipe['ingredients']) {
+                recipe['ingredients'] = [];
+            }
+        }
+        return recipes;})
   }
 }
