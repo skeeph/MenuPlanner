@@ -20,6 +20,7 @@ import { TodoistService } from "app/food/todoist.service";
 import { FoodModule } from "app/food/food.module";
 import { SettingsModule } from "app/settings/settings.module";
 import { SettingsService } from "app/settings/settings.service";
+import { SettingsGuardService } from "app/settings/settings-guard.service";
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SettingsService } from "app/settings/settings.service";
     RecipeService,
     FoodService,
     TodoistService,
-    SettingsService
+    SettingsService,
+    SettingsGuardService
   ],
   bootstrap: [AppComponent]
 })

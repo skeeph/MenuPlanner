@@ -3,7 +3,7 @@
 # TODO
 1. ~~Уведомления об операциях сохранения итд. angular2-notifications~~
 2. Авторизация и много пользователей
-3. Если нет настроек переправлять на страницу настроек
+3. ~~Если нет настроек переправлять на страницу настроек~~
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
 
