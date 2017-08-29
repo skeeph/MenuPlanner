@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Recipe } from "../recipe.model";
 import { RecipeService } from "app/recipes/recipe.service";
 import { Subscription } from "rxjs/Subscription";
+import { NotificationsService } from "angular2-notifications";
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,7 +14,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   r: Recipe;
   private subscription: Subscription;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(
+    private recipeService: RecipeService,
+    private notificationsService: NotificationsService
+  ) { }
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
@@ -32,8 +36,19 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   onSaveRecipes() {
     this.recipeService.saveRecipes();
     this.recipeService.saveRecipesRest().subscribe(
-      (response) => { console.log(response); }
+      (response) => { console.log(response); },
+      (err) => {
+        console.log(err);
+        this.notificationsService.error("Error", "Error while saving recipes to REST", {
+          showProgressBar: true,
+          timeOut: 0
+        });
+      }
     );
+    this.notificationsService.success("Saved", "Recipes saved", {
+      showProgressBar: true,
+      timeOut: 0
+    });
   }
 
 }

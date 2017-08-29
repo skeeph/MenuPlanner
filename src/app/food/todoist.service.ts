@@ -3,6 +3,7 @@ import { Task } from "task.model";
 import { Http, Response } from "@angular/http";
 import { SettingsService } from "app/settings/settings.service";
 import { UUID } from "angular2-uuid";
+import { NotificationsService } from "angular2-notifications";
 
 @Injectable()
 export class TodoistService {
@@ -68,14 +69,26 @@ export class TodoistService {
     let url = `${this.getBaseUrl()}${JSON.stringify(t)}`;
     this.doQuery(url).subscribe(
       (response: Response) => {
+        this.notificationsService.success("Added", "Products was added to Todoist shopping list", {
+          showProgressBar: true,
+          timeOut: 0
+        });
         console.log(response);
+      },
+      (err)=>{
+        this.notificationsService.success("!!!!", "Error while adding products to shopping list", {
+          showProgressBar: true,
+          timeOut: 0
+        });
+        console.log(err);
       }
     )
   }
 
   constructor(
     private http: Http,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private notificationsService:NotificationsService
   ) {
     this.token = this.settingsService.get("apikey")
   }

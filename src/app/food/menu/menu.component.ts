@@ -3,6 +3,7 @@ import { FoodService } from "app/food/food.service";
 import { RecipeService } from "app/recipes/recipe.service";
 import { TodoistService } from "app/food/todoist.service";
 import currentWeekNumber = require('current-week-number');
+import { NotificationsService } from "angular2-notifications";
 
 
 @Component({
@@ -28,7 +29,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private foodService: FoodService,
     private recipeService: RecipeService,
-    private todoistService: TodoistService
+    private todoistService: TodoistService,
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,11 @@ export class MenuComponent implements OnInit {
 
   onSaveClick() {
     this.foodService.saveFood();
-    this.foodService.saveRest(); // TODO: Test this
+    this.foodService.saveRest();
+    this.notificationsService.success("Saved", "Menu was saved", {
+      showProgressBar: true,
+      timeOut: 0
+    });
   }
 
   onGenerate() {
@@ -64,6 +70,6 @@ export class MenuComponent implements OnInit {
     let products = this.foodService.getProducts();
     this.todoistService.saveTasks(products);
     console.log(products);
-    
+
   }
 }

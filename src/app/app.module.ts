@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule } from "@angular/forms";
 import { Ng2CompleterModule } from "ng2-completer";
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 import { AppComponent } from './app.component';
@@ -32,7 +35,9 @@ import { SettingsService } from "app/settings/settings.service";
     SharedModule,
     HttpModule,
     FoodModule,
-    SettingsModule
+    SettingsModule,
+    SimpleNotificationsModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     RecipeService,

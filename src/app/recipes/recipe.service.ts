@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Recipe } from "./recipe.model";
 import { Subject } from "rxjs";
 import { Http, Response } from "@angular/http";
+import { NotificationsService } from "angular2-notifications";
 
 @Injectable()
 export class RecipeService {
@@ -30,16 +31,28 @@ export class RecipeService {
     recipe.generateId();
     this.recipes.push(recipe);
     this.recipesChanges.next(this.recipes.slice());
+    this.notificationsService.success("Success", "Recipe added", {
+      showProgressBar: true,
+      timeOut: 0
+    });
   }
 
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
     this.recipesChanges.next(this.recipes.slice());
+    this.notificationsService.success("Updated", "Recipe updated", {
+      showProgressBar: true,
+      timeOut: 0
+    });
   }
 
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipesChanges.next(this.recipes.slice());
+    this.notificationsService.warn("Deleted", "Recipe was deleted", {
+      showProgressBar: true,
+      timeOut: 0
+    });
   }
 
   saveRecipes() {
@@ -58,7 +71,7 @@ export class RecipeService {
     resp.subscribe(
       (recipes: Recipe[]) => {
         console.log(recipes);
-        
+
         this.recipes = recipes;
         this.recipesChanges.next(this.recipes.slice());
         this.saveRecipes();
@@ -68,7 +81,8 @@ export class RecipeService {
 
 
   constructor(
-    private http: Http
+    private http: Http,
+    private notificationsService: NotificationsService
   ) { }
 
   private url = "https://pushreceiver-26e46.firebaseio.com/recipes.json";
@@ -83,14 +97,15 @@ export class RecipeService {
 
   private loadRecipesRest() {
     return this.http.get(this.getUrl())
-    .map(
-    (response: Response) => {
+      .map(
+      (response: Response) => {
         const recipes: Recipe[] = response.json()
         for (let recipe of recipes) {
-            if (!recipe['ingredients']) {
-                recipe['ingredients'] = [];
-            }
+          if (!recipe['ingredients']) {
+            recipe['ingredients'] = [];
+          }
         }
-        return recipes;})
+        return recipes;
+      })
   }
 }

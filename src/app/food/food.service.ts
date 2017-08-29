@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response } from "@angular/http";
+import { NotificationsService } from "angular2-notifications";
 
 @Injectable()
 export class FoodService {
@@ -11,7 +12,8 @@ export class FoodService {
 
   constructor(
     private recipeService: RecipeService,
-    private http: Http
+    private http: Http,
+    private notificationsService:NotificationsService
   ) {
   }
 
@@ -56,9 +58,17 @@ export class FoodService {
           } else {
             this.food = {};
           }
+          respfood!=null?this.food=respfood:this.food={};
           
           this.saveFood();
           this.foodsChanged.emit();
+        }, 
+        (err)=>{
+          this.notificationsService.error("Error", "Error while loading menu", {
+            showProgressBar: true,
+            timeOut: 0
+          });
+          console.log(Error);
         }
       );
     }
