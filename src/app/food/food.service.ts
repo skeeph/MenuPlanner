@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
+import currentWeekNumber = require('current-week-number');
 
 @Injectable()
 export class FoodService {
@@ -13,7 +14,7 @@ export class FoodService {
   constructor(
     private recipeService: RecipeService,
     private http: Http,
-    private notificationsService:NotificationsService
+    private notificationsService: NotificationsService
   ) {
   }
 
@@ -24,9 +25,11 @@ export class FoodService {
     return `food${num}`
   }
 
-  setWeekNum(num: number) {
-    this.weekNum = num;
-    this.food[this.weekNum] = {};
+  setWeekNum() {
+    this.weekNum = currentWeekNumber();
+    if (this.food[this.weekNum] == null) {
+      this.food[this.weekNum] = {};
+    }
   }
 
   updateDay(code: string, food: any[]) {
@@ -46,6 +49,10 @@ export class FoodService {
     let savedfood = localStorage.getItem("food");
     if (savedfood != null) {
       this.food = JSON.parse(savedfood);
+      let week = currentWeekNumber();
+      if (!(week in this.food)) {
+        this.food[week] = {};
+      }
       return;
     }
     else {
@@ -53,17 +60,17 @@ export class FoodService {
       this.loadRest().subscribe(
         (resp: Response) => {
           let respfood = resp.json()["food"]
-          if (respfood!=null) {
-            this.food = respfood;  
+          if (respfood != null) {
+            this.food = respfood;
           } else {
             this.food = {};
           }
-          respfood!=null?this.food=respfood:this.food={};
-          
+          respfood != null ? this.food = respfood : this.food = {};
+
           this.saveFood();
           this.foodsChanged.emit();
-        }, 
-        (err)=>{
+        },
+        (err) => {
           this.notificationsService.error("Error", "Error while loading menu", {
             showProgressBar: true,
             timeOut: 0
@@ -116,7 +123,7 @@ export class FoodService {
   clearFood() {
     this.food[this.weekNum] = {}
     localStorage.removeItem(this.getCode())
-    this.saveRest(); 
+    this.saveRest();
     this.foodsChanged.emit();
   }
 

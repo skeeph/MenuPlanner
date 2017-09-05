@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.num = this.getWeekNumber();
-    this.foodService.setWeekNum(this.num);
+    // this.foodService.setWeekNum(this.num);
     this.foodService.loadFood();
   }
 

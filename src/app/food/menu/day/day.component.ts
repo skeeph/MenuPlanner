@@ -74,4 +74,12 @@ export class DayComponent implements OnInit {
     this.isAdding = false;
   }
 
+  deleteFood(i) {
+    this.foods.splice(i, 1);
+  }
+
+  randomFood(i) {
+    this.foods[i] = this.recipeService.getRandomRecipe();
+  }
+
 }

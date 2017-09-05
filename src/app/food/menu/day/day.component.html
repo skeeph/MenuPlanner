@@ -1,17 +1,22 @@
 <div class="col-md-3 day" style="height: 200pt">
     <h4>{{day}}</h4>
 
-    <div class="row" (click)="isAdding=!isAdding">
+    <div class="row">
         <ul class="list-group">
             <!--TODO: Delete Recipe on Click-->
-            <li class="list-group-item" *ngFor="let food of foods">{{food.name}}</li>
+            <li class="list-group-item" *ngFor="let food of foods; let i = index">
+                {{food.name}}
+                <span class="pull-right">
+                    <span class="glyphicon glyphicon-random" (click)="randomFood(i)"></span>
+                    <span class="glyphicon glyphicon-remove" (click)="deleteFood(i)"></span>
+                </span>
+            </li>
 
         </ul>
     </div>
 
     <div class="row">
-        <button type="button" *ngIf="!isAdding" (click)="isAdding=!isAdding" 
-        class="btn btn-block btn-default btn-sm">
+        <button type="button" *ngIf="!isAdding" (click)="isAdding=!isAdding" class="btn btn-block btn-default btn-sm">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
         <form *ngIf="isAdding">
