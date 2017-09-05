@@ -7,8 +7,8 @@
             <li class="list-group-item" *ngFor="let food of foods; let i = index">
                 {{food.name}}
                 <span class="pull-right">
-                    <span class="glyphicon glyphicon-random" (click)="randomFood(i)"></span>
-                    <span class="glyphicon glyphicon-remove" (click)="deleteFood(i)"></span>
+                    <span class="glyphicon glyphicon-random action" (click)="randomFood(i)"></span>
+                    <span class="glyphicon glyphicon-remove action" (click)="deleteFood(i)"></span>
                 </span>
             </li>
 
