@@ -8,6 +8,7 @@ const appRoutes: Routes = [
     { path: '', loadChildren:'./food/food.module#FoodModule', canActivate:[SettingsGuardService]},
     { path: 'recipes', loadChildren:'./recipes/recipes.module#RecipesModule', canActivate:[SettingsGuardService] },
     { path: 'settings', loadChildren:'./settings/settings.module#SettingsModule' },
+    { path: 'auth', loadChildren:'./auth/auth.module#AuthModule'}
     
 ];
 

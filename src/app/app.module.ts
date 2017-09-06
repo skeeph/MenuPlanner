@@ -21,6 +21,8 @@ import { FoodModule } from "app/food/food.module";
 import { SettingsModule } from "app/settings/settings.module";
 import { SettingsService } from "app/settings/settings.service";
 import { SettingsGuardService } from "app/settings/settings-guard.service";
+import { AuthModule } from "app/auth/auth.module";
+import { AuthService } from "app/auth/auth.service";
 
 
 @NgModule({
@@ -38,14 +40,16 @@ import { SettingsGuardService } from "app/settings/settings-guard.service";
     FoodModule,
     SettingsModule,
     SimpleNotificationsModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AuthModule
   ],
   providers: [
     RecipeService,
     FoodService,
     TodoistService,
     SettingsService,
-    SettingsGuardService
+    SettingsGuardService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -10,7 +10,13 @@
                 <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-wrench"></span></a></li>
+                <ng-template [ngIf]="!authService.isAuthed()">
+                    <li><a routerLink="/auth/signin">Login</a></li>
+                    <li><a routerLink="/auth/signup">Register</a></li>
+                </ng-template>
+                <ng-template [ngIf]="authService.isAuthed()">
+                    <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-wrench"></span></a></li>
+                </ng-template>
             </ul>
         </div>
     </div>
