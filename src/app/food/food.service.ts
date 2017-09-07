@@ -3,7 +3,7 @@ import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
 import currentWeekNumber = require('current-week-number');
-import { AuthService } from "app/auth/auth.service";
+
 
 @Injectable()
 export class FoodService {
@@ -16,10 +16,14 @@ export class FoodService {
     private recipeService: RecipeService,
     private http: Http,
     private notificationsService: NotificationsService,
-    private authService:AuthService
   ) {
   }
 
+  private tk:string;
+
+  setToken(tk:string){
+    this.tk=tk;
+  }
   private getCode(num?: number) {
     if (num == null) {
       num = this.weekNum;
@@ -86,8 +90,7 @@ export class FoodService {
 
 
   private getUrl():string{
-    const tk = this.authService.getToken();
-    return `https://pushreceiver-26e46.firebaseio.com/food.json?auth=${tk}`
+    return `https://pushreceiver-26e46.firebaseio.com/food.json?auth=${this.tk}`
   }
   
   loadRest() {

@@ -3,7 +3,6 @@ import { Recipe } from "./recipe.model";
 import { Subject } from "rxjs";
 import { Http, Response } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
-import { AuthService } from "app/auth/auth.service";
 
 @Injectable()
 export class RecipeService {
@@ -84,15 +83,19 @@ export class RecipeService {
   constructor(
     private http: Http,
     private notificationsService: NotificationsService,
-    private authService:AuthService
   ) { }
 
   private url = "https://pushreceiver-26e46.firebaseio.com/recipes.json";
+  private token: string;
+
+  setToken(tk:string){
+    this.token = tk;
+  }
 
   private getUrl(): string {
-    const tk = this.authService.getToken();
-    return `${this.url}?auth=${tk}`
+    return `${this.url}?auth=${this.token}`
   }
+  
   saveRecipesRest() {
     return this.http.put(this.getUrl(), this.recipes)
   }

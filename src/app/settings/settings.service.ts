@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from "@angular/http";
 
-import { AuthService } from "app/auth/auth.service";
-
 @Injectable()
 export class SettingsService {
-
+  
   settings = ["project_name", "apikey", "project_id"]
   user_settings = ["project_name", "apikey"]
 
+  private token: string;
+   setToken(tk:string){
+     this.token=tk;
+   }
+
   private getUrl(key: string): string {
-    let tk = this.authService.getToken();
-    return `https://pushreceiver-26e46.firebaseio.com/${key}.json?auth=${tk}`
+    return `https://pushreceiver-26e46.firebaseio.com/${key}.json?auth=${this.token}`
   }
 
   private fireSet(key: string, val: string) {
@@ -36,7 +38,7 @@ export class SettingsService {
   public loadSettings() {
     for (let i = 0; i < this.settings.length; i++) {
       let key = this.settings[i];
-      if (key == null) {
+      if (this.get(key) == null) {
         this.fireGet(key);
       }
     }
@@ -66,8 +68,7 @@ export class SettingsService {
   }
 
   constructor(
-    private http: Http,
-    private authService: AuthService
+    private http: Http
   ) { }
 
 }

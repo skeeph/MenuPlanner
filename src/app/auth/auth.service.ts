@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from "firebase";
 import { Router } from "@angular/router";
 import { NotificationsService } from "angular2-notifications";
+import { AfterAuthService } from "app/auth/after-auth.service";
 
 @Injectable()
 export class AuthService {
@@ -9,7 +10,8 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private afterAuthService:AfterAuthService
   ) { }
 
   signinUser(email: string, password: string) {
@@ -18,6 +20,7 @@ export class AuthService {
         firebase.auth().currentUser.getToken().then(
           (token: string) => {
             this.token = token;
+            this.afterAuthService.loadUserData(token)
           }
         )
         this.router.navigate(["/"]);
