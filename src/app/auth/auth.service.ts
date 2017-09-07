@@ -43,7 +43,7 @@ export class AuthService {
           showProgressBar: true,
           timeOut: 0
         });
-        this.router.navigate(["/auth/login"]);
+        this.router.navigate(["/auth/signin"]);
       }
       )
       .catch(
