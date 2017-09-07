@@ -3,6 +3,7 @@ import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
 import currentWeekNumber = require('current-week-number');
+import { AuthService } from "app/auth/auth.service";
 
 @Injectable()
 export class FoodService {
@@ -14,7 +15,8 @@ export class FoodService {
   constructor(
     private recipeService: RecipeService,
     private http: Http,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private authService:AuthService
   ) {
   }
 
@@ -82,16 +84,21 @@ export class FoodService {
 
   }
 
-  private url = "https://pushreceiver-26e46.firebaseio.com/food.json"
+
+  private getUrl():string{
+    const tk = this.authService.getToken();
+    return `https://pushreceiver-26e46.firebaseio.com/food.json?auth=${tk}`
+  }
+  
   loadRest() {
-    return this.http.get(this.url);
+    return this.http.get(this.getUrl());
   }
 
   saveRest() {
     let temp = {}
     temp["food"] = this.food;
 
-    this.http.put(this.url, temp).subscribe(
+    this.http.put(this.getUrl(), temp).subscribe(
       (resp: Response) => {
         console.log(resp.json());
       }
