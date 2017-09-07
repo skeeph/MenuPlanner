@@ -95,7 +95,7 @@ export class RecipeService {
   private getUrl(): string {
     return `${this.url}?auth=${this.token}`
   }
-  
+
   saveRecipesRest() {
     return this.http.put(this.getUrl(), this.recipes)
   }
@@ -112,5 +112,9 @@ export class RecipeService {
         }
         return recipes;
       })
+  }
+
+  clearCache(){
+    localStorage.removeItem(this.getCode());
   }
 }

@@ -8,12 +8,12 @@ export class AfterAuthService {
 
   constructor(
     private settingsService: SettingsService,
-    private foodService:FoodService,
-    private recipeService:RecipeService
-    
+    private foodService: FoodService,
+    private recipeService: RecipeService
+
   ) { }
 
-  loadUserData(token: string) {
+  afterLogin(token: string) {
     this.settingsService.setToken(token)
     this.settingsService.loadSettings();
 
@@ -22,7 +22,12 @@ export class AfterAuthService {
 
     this.recipeService.setToken(token);
     this.recipeService.loadRecipes();
+  }
 
+  afterLogout() {
+    this.foodService.clearCache();
+    this.settingsService.clearCache();
+    this.recipeService.clearCache();
   }
 
 }

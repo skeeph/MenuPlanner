@@ -19,10 +19,10 @@ export class FoodService {
   ) {
   }
 
-  private tk:string;
+  private tk: string;
 
-  setToken(tk:string){
-    this.tk=tk;
+  setToken(tk: string) {
+    this.tk = tk;
   }
   private getCode(num?: number) {
     if (num == null) {
@@ -89,10 +89,10 @@ export class FoodService {
   }
 
 
-  private getUrl():string{
+  private getUrl(): string {
     return `https://pushreceiver-26e46.firebaseio.com/food.json?auth=${this.tk}`
   }
-  
+
   loadRest() {
     return this.http.get(this.getUrl());
   }
@@ -173,4 +173,7 @@ export class FoodService {
     return result;
   }
 
+  clearCache() {
+    localStorage.removeItem("food");
+  }
 }

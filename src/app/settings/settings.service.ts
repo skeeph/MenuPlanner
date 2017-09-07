@@ -67,6 +67,12 @@ export class SettingsService {
     return true;
   }
 
+  clearCache(){
+    for (let i = 0; i < this.settings.length; i++) {
+      localStorage.removeItem(this.settings[i]);
+    }
+  }
+
   constructor(
     private http: Http
   ) { }
