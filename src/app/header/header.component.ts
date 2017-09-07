@@ -11,7 +11,7 @@ import { NotificationsService } from "angular2-notifications";
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private authService:AuthService,
+    public authService:AuthService,
     private router: Router,
     private notificationsService:NotificationsService
   ) { }
