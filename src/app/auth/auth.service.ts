@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import { Router } from "@angular/router";
 import { NotificationsService } from "angular2-notifications";
 import { AfterAuthService } from "app/auth/after-auth.service";
+import { Http } from '@angular/http';
 
 @Injectable()
 export class AuthService {
@@ -11,72 +12,78 @@ export class AuthService {
   constructor(
     private router: Router,
     private notificationsService: NotificationsService,
-    private afterAuthService:AfterAuthService
+    private afterAuthService: AfterAuthService,
+    private http: Http
   ) { }
 
-  signinUser(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(response => {
-        firebase.auth().currentUser.getToken().then(
-          (token: string) => {
-            this.token = token;
-            this.afterAuthService.afterLogin(token)
-          }
-        )
+  signinUser(username: string, password: string) {
+    let url = "http://localhost:8000/api/v1/api-token-auth/";
+    let data = {
+      "username": username,
+      "password": password
+    };
+
+    this.http.post(url, data).subscribe(
+      (response) => {
+        let token=response.json()["token"];
+        this.token = token;
+        localStorage.setItem("token", this.token);
+        this.afterAuthService.afterLogin(token);
         this.router.navigate(["/"]);
-      })
-      .catch(error => {
+      },
+      (error) => {
         console.log(error);
         this.notificationsService.error("Error", "Error while signing in", {
           showProgressBar: true,
           timeOut: 0
         });
-      });
+      },
+    );
+
+    
+
   }
 
-  signupUser(email: string, password: string) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(
-      response => {
+  signupUser(username: string, password: string) {
+    let url = "http://localhost:8000/api/v1/users/";
+    let data = {
+      "username": username,
+      "password": password
+    };
+
+    this.http.post(url, data).subscribe(
+      (response) => {
         console.log(response);
         this.notificationsService.error("Account created", "Please login", {
           showProgressBar: true,
           timeOut: 0
         });
         this.router.navigate(["/auth/signin"]);
-      }
-      )
-      .catch(
+      },
       (error) => {
         console.log(error);
         this.notificationsService.error("Error", "Error while creating account", {
           showProgressBar: true,
           timeOut: 0
         });
-      }
-      );
+      },
+    );
   }
 
   getToken() {
-    let user = firebase.auth().currentUser;
-    if (user) {
-      user.getToken()
-        .then(
-        (token: string) => {
-          this.token = token;
-        }
-        );
+    if(this.token == null){
+      this.token = localStorage.getItem("token");
     }
     return this.token;
   }
 
   isAuthed(): boolean {
-    return this.token != null;
+    return this.getToken() != null;
   }
 
   logout() {
     this.afterAuthService.afterLogout();
-    firebase.auth().signOut();
+    localStorage.removeItem("token");
     this.token = null;
   }
 

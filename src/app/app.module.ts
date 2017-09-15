@@ -5,8 +5,6 @@ import { FormsModule } from "@angular/forms";
 import { Ng2CompleterModule } from "ng2-completer";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as firebase from "firebase";
-
 
 
 import { AppComponent } from './app.component';
@@ -25,11 +23,6 @@ import { SettingsGuardService } from "app/settings/settings-guard.service";
 import { AuthModule } from "app/auth/auth.module";
 import { AuthService } from "app/auth/auth.service";
 import { AuthGuard } from "app/auth/auth-guard.service";
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDMFRAIxjclUZ-gBzscoh988mA9PwlzRKQ",
-  authDomain: "pushreceiver-26e46.firebaseapp.com",
-});
 
 @NgModule({
   declarations: [
