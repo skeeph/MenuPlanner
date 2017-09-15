@@ -23,6 +23,16 @@ export class RecipeService {
     return this.recipes[id];
   }
 
+  getRecipeByUUID(uuid: string){
+    for (var i = 0; i < this.recipes.length; i++) {
+      var recipe = this.recipes[i];
+      if (recipe.id===uuid) {
+        return recipe;
+      }
+    }
+    return null;
+  }
+
   getRandomRecipe() {
     return this.recipes[Math.floor(Math.random() * this.recipes.length)];
   }

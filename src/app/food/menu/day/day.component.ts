@@ -25,6 +25,8 @@ export class DayComponent implements OnInit {
 
   ];
 
+  food_ids = [];
+
   protected onSelected(item: CompleterItem) {
     this.selectedColor = item ? item.title : '';
   }
@@ -53,13 +55,13 @@ export class DayComponent implements OnInit {
 
     this.foodService.foodsChanged.subscribe(
       () => {
-        this.foods = this.foodService.getFoodForDay(this.code);
+        this.food_ids = this.foodService.getFoodForDay(this.code);
       }
     );
   }
 
   ngOnInit() {
-    this.foods = this.foodService.getFoodForDay(this.code);
+    this.food_ids = this.foodService.getFoodForDay(this.code);
   }
 
   onRecipeSelected(selected: CompleterItem) {
@@ -67,21 +69,25 @@ export class DayComponent implements OnInit {
       return;
     }
     const food = selected.originalObject;
-    if (!this.foods.includes(food)) {
-      this.foods.push(food);
-      this.foodService.updateDay(this.code, this.foods);
+    if (!this.food_ids.includes(food.id)) {
+      this.food_ids.push(food.id);
+      this.foodService.updateDay(this.code, this.food_ids);
     }
     this.isAdding = false;
   }
 
+  getName(uuid:string){
+    return this.recipeService.getRecipeByUUID(uuid).name;
+  }
+
   deleteFood(i) {
-    this.foods.splice(i, 1);
-    this.foodService.updateDay(this.code, this.foods);
+    this.food_ids.splice(i, 1);
+    this.foodService.updateDay(this.code, this.food_ids);
   }
 
   randomFood(i) {
-    this.foods[i] = this.recipeService.getRandomRecipe();
-    this.foodService.updateDay(this.code, this.foods);
+    this.food_ids[i] = this.recipeService.getRandomRecipe().id;
+    this.foodService.updateDay(this.code, this.food_ids);
   }
 
 }

@@ -7,7 +7,6 @@ import currentWeekNumber = require('current-week-number');
 
 @Injectable()
 export class FoodService {
-  // TODO: Сохранять не полностью рецепты, а идентификаторы на них
   weekNum = -1;
   food = {};
   foodsChanged = new EventEmitter<void>();
@@ -119,7 +118,7 @@ export class FoodService {
   generateForDay(code: string) {
     let food = [];
     for (var k = 0; k < 2; k++) {
-      let recipe = this.recipeService.getRandomRecipe();
+      let recipe = this.recipeService.getRandomRecipe().id;
       if (!food.includes(recipe)) {
         food.push(recipe)
       } else {
@@ -145,7 +144,7 @@ export class FoodService {
     for (let dn in days) {
       let food = now[days[dn]];
       for (let i = 0; i < food.length; i++) {
-        ingredients = ingredients.concat(food[i].ingredients)
+        ingredients = ingredients.concat(this.recipeService.getRecipeByUUID(food[i]).ingredients)
       }
     }
     let ing_amount = {}

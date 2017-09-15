@@ -4,8 +4,8 @@
     <div class="row">
         <ul class="list-group">
             <!--TODO: Delete Recipe on Click-->
-            <li class="list-group-item" *ngFor="let food of foods; let i = index">
-                {{food.name}}
+            <li class="list-group-item" *ngFor="let food_id of food_ids; let i = index">
+                {{ getName(food_id) }}
                 <span class="pull-right">
                     <span class="glyphicon glyphicon-random action" (click)="randomFood(i)"></span>
                     <span class="glyphicon glyphicon-remove action" (click)="deleteFood(i)"></span>
