@@ -3,10 +3,11 @@ import { Recipe } from "./recipe.model";
 import { Subject } from "rxjs";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
-import { Authable } from 'app/shared/Authable.mixin';
-import { applyMixins } from 'app/shared/applyMixin';
+import { Authable } from 'app/shared/authable.mixin';
+import { Mixin } from 'app/shared/mixin.decorator';
 
 @Injectable()
+@Mixin([Authable])
 export class RecipeService implements Authable{
   recipesChanges = new Subject<Recipe[]>();
 
@@ -153,5 +154,3 @@ export class RecipeService implements Authable{
     localStorage.removeItem(this.getCode());
   }
 }
-
-applyMixins(RecipeService, [Authable]);

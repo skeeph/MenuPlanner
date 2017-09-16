@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
-import { Authable } from 'app/shared/Authable.mixin';
-import { applyMixins } from 'app/shared/applyMixin';
+import { Authable } from 'app/shared/authable.mixin';
+import { Mixin } from 'app/shared/mixin.decorator';
 
 @Injectable()
+@Mixin([Authable])
 export class SettingsService implements Authable{
 
   settings = ["project_name", "apikey", "project_id"]
@@ -92,5 +93,3 @@ export class SettingsService implements Authable{
   ) { }
 
 }
-
-applyMixins(SettingsService, [Authable]);

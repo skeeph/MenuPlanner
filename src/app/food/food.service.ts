@@ -2,12 +2,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
-import { Authable } from 'app/shared/Authable.mixin';
-import { applyMixins } from 'app/shared/applyMixin';
+import { Authable } from 'app/shared/authable.mixin';
 import currentWeekNumber = require('current-week-number');
+import { Mixin } from 'app/shared/mixin.decorator';
 
 
 @Injectable()
+@Mixin([Authable])
 export class FoodService implements Authable{
   weekNum = -1;
   food = {};
@@ -188,5 +189,3 @@ export class FoodService implements Authable{
     localStorage.removeItem("food");
   }
 }
-
-applyMixins(FoodService, [Authable]);
