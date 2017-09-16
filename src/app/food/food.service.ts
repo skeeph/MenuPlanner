@@ -63,15 +63,8 @@ export class FoodService {
     else {
       // Загрузка из REST
       this.loadRest().subscribe(
-        (resp: Response) => {
-          let respfood = resp.json()["food"]
-          if (respfood != null) {
-            this.food = respfood;
-          } else {
-            this.food = {};
-          }
-          respfood != null ? this.food = respfood : this.food = {};
-
+        (food) => {
+          food != null ? this.food = food : this.food = {};
           this.saveFood();
           this.foodsChanged.emit();
         },
@@ -89,22 +82,36 @@ export class FoodService {
 
 
   private getUrl(): string {
-    return `https://pushreceiver-26e46.firebaseio.com/food.json?auth=${this.tk}`
+    return `http://localhost:8000/api/v1/menu/`
   }
 
   loadRest() {
-    return this.http.get(this.getUrl());
+    return this.http.get(this.getUrl())
+      .map((response:Response)=>{
+        let f = {}
+        let weeks = response.json()["results"]
+        for(let i = 0; i<weeks.length; i++){
+          let week = weeks[i];
+          let num = week['num'];
+          delete week['num'];
+          f[num]=week;
+        }
+        return f;
+      });
   }
 
   saveRest() {
-    let temp = {}
-    temp["food"] = this.food;
-
-    this.http.put(this.getUrl(), temp).subscribe(
-      (resp: Response) => {
-        console.log(resp.json());
+    for (var week in this.food) {
+      if (this.food.hasOwnProperty(week)) {
+        var menu = this.food[week];
+        menu['num']=week;
+        console.log(JSON.stringify(menu));
+        this.http.post(this.getUrl(), menu).subscribe(
+          (response:Response)=>{console.log(response)},
+          (error)=>{console.log(error)},
+        )
       }
-    )
+    }
   }
   getFoodForDay(code: string) {
     let food = this.food[this.weekNum][code];
