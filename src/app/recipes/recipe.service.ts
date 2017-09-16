@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from "./recipe.model";
 import { Subject } from "rxjs";
-import { Http, Response } from "@angular/http";
+import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
 
 @Injectable()
@@ -97,23 +97,30 @@ export class RecipeService {
   ) { }
 
   private url = "http://localhost:8000/api/v1/recipes/";
-  private token: string;
+  private tk: string = null;
 
   setToken(tk: string) {
-    this.token = tk;
+    this.tk = tk;
   }
 
   private getUrl(): string {
     return `${this.url}`
   }
 
+  private getAuthHeader() {
+    if (this.tk===null) {
+      this.tk = localStorage.getItem("token");
+    }
+    let headers = new Headers();
+    headers.append('Authorization', `Token ${this.tk}`);
+    return new RequestOptions({ headers: headers });
+  }
+
   saveRecipesRest() {
     // TODO: Bulk save
     for (var rn in this.recipes) {
-      console.log(rn);
-
       let recipe = this.recipes[rn];
-      this.http.post(this.getUrl(), recipe).subscribe(
+      this.http.post(this.getUrl(), recipe, this.getAuthHeader()).subscribe(
         (response) => { console.log(response); },
         (err) => {
           console.log(err);
@@ -132,7 +139,7 @@ export class RecipeService {
   }
 
   private loadRecipesRest() {
-    return this.http.get(this.getUrl())
+    return this.http.get(this.getUrl(), this.getAuthHeader())
       .map(
       (response: Response) => {
         const js = response.json();

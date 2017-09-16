@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
-import { Http, Response } from "@angular/http";
+import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
 import currentWeekNumber = require('current-week-number');
 
@@ -18,7 +18,7 @@ export class FoodService {
   ) {
   }
 
-  private tk: string;
+  private tk: string = null;
 
   setToken(tk: string) {
     this.tk = tk;
@@ -85,30 +85,43 @@ export class FoodService {
     return `http://localhost:8000/api/v1/menu/`
   }
 
+  private getAuthHeader() {
+    if (this.tk===null) {
+      this.tk = localStorage.getItem("token");
+    }
+    let headers = new Headers();
+    headers.append('Authorization', `Token ${this.tk}`);
+    let opts = new RequestOptions({ headers: headers });
+    opts.withCredentials = true;
+    return opts;
+  }
+
   loadRest() {
-    return this.http.get(this.getUrl())
-      .map((response:Response)=>{
+    let auth = this.getAuthHeader();
+    return this.http.get(this.getUrl(), auth)
+      .map((response: Response) => {
         let f = {}
         let weeks = response.json()["results"]
-        for(let i = 0; i<weeks.length; i++){
+        for (let i = 0; i < weeks.length; i++) {
           let week = weeks[i];
           let num = week['num'];
           delete week['num'];
-          f[num]=week;
+          f[num] = week;
         }
         return f;
       });
   }
 
   saveRest() {
+    let auth = this.getAuthHeader();
     for (var week in this.food) {
       if (this.food.hasOwnProperty(week)) {
         var menu = this.food[week];
-        menu['num']=week;
-        console.log(JSON.stringify(menu));
-        this.http.post(this.getUrl(), menu).subscribe(
-          (response:Response)=>{console.log(response)},
-          (error)=>{console.log(error)},
+        menu['num'] = week;
+        this.http.post(this.getUrl(), menu, auth)
+          .subscribe(
+          (response: Response) => { console.log(response) },
+          (error) => { console.log(error) },
         )
       }
     }
