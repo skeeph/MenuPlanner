@@ -23,10 +23,10 @@ export class RecipeService {
     return this.recipes[id];
   }
 
-  getRecipeByUUID(uuid: string){
+  getRecipeByUUID(uuid: string) {
     for (var i = 0; i < this.recipes.length; i++) {
       var recipe = this.recipes[i];
-      if (recipe.id===uuid) {
+      if (recipe.uuid === uuid) {
         return recipe;
       }
     }
@@ -34,7 +34,8 @@ export class RecipeService {
   }
 
   getRandomRecipe() {
-    return this.recipes[Math.floor(Math.random() * this.recipes.length)];
+    let randind = Math.floor(Math.random() * this.recipes.length);
+    return this.recipes[randind];
   }
 
   addRecipe(recipe: Recipe) {
@@ -95,26 +96,47 @@ export class RecipeService {
     private notificationsService: NotificationsService,
   ) { }
 
-  private url = "https://pushreceiver-26e46.firebaseio.com/recipes.json";
+  private url = "http://localhost:8000/api/v1/recipes/";
   private token: string;
 
-  setToken(tk:string){
+  setToken(tk: string) {
     this.token = tk;
   }
 
   private getUrl(): string {
-    return `${this.url}?auth=${this.token}`
+    return `${this.url}`
   }
 
   saveRecipesRest() {
-    return this.http.put(this.getUrl(), this.recipes)
+    // TODO: Bulk save
+    for (var rn in this.recipes) {
+      console.log(rn);
+
+      let recipe = this.recipes[rn];
+      this.http.post(this.getUrl(), recipe).subscribe(
+        (response) => { console.log(response); },
+        (err) => {
+          console.log(err);
+          // this.notificationsService.error("Error", "Error while saving recipes to REST", {
+          //   showProgressBar: true,
+          //   timeOut: 0
+          // });
+        }
+      );
+      // this.notificationsService.success("Saved", "Recipes saved", {
+      //   showProgressBar: true,
+      //   timeOut: 0
+      // });
+    }
+
   }
 
   private loadRecipesRest() {
     return this.http.get(this.getUrl())
       .map(
       (response: Response) => {
-        const recipes: Recipe[] = response.json()
+        const js = response.json();
+        const recipes: Recipe[] = js['results'];
         for (let recipe of recipes) {
           if (!recipe['ingredients']) {
             recipe['ingredients'] = [];
@@ -124,7 +146,7 @@ export class RecipeService {
       })
   }
 
-  clearCache(){
+  clearCache() {
     localStorage.removeItem(this.getCode());
   }
 }
