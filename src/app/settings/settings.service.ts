@@ -1,25 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
+import { Authable } from 'app/shared/Authable.mixin';
+import { applyMixins } from 'app/shared/applyMixin';
 
 @Injectable()
-export class SettingsService {
+export class SettingsService implements Authable{
 
   settings = ["project_name", "apikey", "project_id"]
   user_settings = ["project_name", "apikey"]
 
-  private tk: string;
+  tk: string=null;
+  getAuthHeader:()=>RequestOptions;
   setToken(tk: string) {
     this.tk = tk;
   }
 
-  private getAuthHeader() {
-    if (this.tk === null) {
-      this.tk = localStorage.getItem("token");
-    }
-    let headers = new Headers();
-    headers.append('Authorization', `Token ${this.tk}`);
-    return new RequestOptions({ headers: headers });
-  }
 
   private getUrl(): string {
     return `http://localhost:8000/api/v1/settings/`
@@ -97,3 +92,5 @@ export class SettingsService {
   ) { }
 
 }
+
+applyMixins(SettingsService, [Authable]);

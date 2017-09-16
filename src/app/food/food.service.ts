@@ -2,11 +2,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { RecipeService } from "app/recipes/recipe.service";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
+import { Authable } from 'app/shared/Authable.mixin';
+import { applyMixins } from 'app/shared/applyMixin';
 import currentWeekNumber = require('current-week-number');
 
 
 @Injectable()
-export class FoodService {
+export class FoodService implements Authable{
   weekNum = -1;
   food = {};
   foodsChanged = new EventEmitter<void>();
@@ -17,8 +19,6 @@ export class FoodService {
     private notificationsService: NotificationsService,
   ) {
   }
-
-  private tk: string = null;
 
   setToken(tk: string) {
     this.tk = tk;
@@ -85,16 +85,8 @@ export class FoodService {
     return `http://localhost:8000/api/v1/menu/`
   }
 
-  private getAuthHeader() {
-    if (this.tk===null) {
-      this.tk = localStorage.getItem("token");
-    }
-    let headers = new Headers();
-    headers.append('Authorization', `Token ${this.tk}`);
-    let opts = new RequestOptions({ headers: headers });
-    opts.withCredentials = true;
-    return opts;
-  }
+  tk: string=null;
+  getAuthHeader:()=>RequestOptions;
 
   loadRest() {
     let auth = this.getAuthHeader();
@@ -196,3 +188,5 @@ export class FoodService {
     localStorage.removeItem("food");
   }
 }
+
+applyMixins(FoodService, [Authable]);

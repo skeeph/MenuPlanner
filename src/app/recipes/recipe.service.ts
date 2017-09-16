@@ -3,9 +3,11 @@ import { Recipe } from "./recipe.model";
 import { Subject } from "rxjs";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { NotificationsService } from "angular2-notifications";
+import { Authable } from 'app/shared/Authable.mixin';
+import { applyMixins } from 'app/shared/applyMixin';
 
 @Injectable()
-export class RecipeService {
+export class RecipeService implements Authable{
   recipesChanges = new Subject<Recipe[]>();
 
   private getCode() {
@@ -97,7 +99,7 @@ export class RecipeService {
   ) { }
 
   private url = "http://localhost:8000/api/v1/recipes/";
-  private tk: string = null;
+
 
   setToken(tk: string) {
     this.tk = tk;
@@ -107,14 +109,8 @@ export class RecipeService {
     return `${this.url}`
   }
 
-  private getAuthHeader() {
-    if (this.tk===null) {
-      this.tk = localStorage.getItem("token");
-    }
-    let headers = new Headers();
-    headers.append('Authorization', `Token ${this.tk}`);
-    return new RequestOptions({ headers: headers });
-  }
+  tk: string=null;
+  getAuthHeader:()=>RequestOptions;
 
   saveRecipesRest() {
     // TODO: Bulk save
@@ -157,3 +153,5 @@ export class RecipeService {
     localStorage.removeItem(this.getCode());
   }
 }
+
+applyMixins(RecipeService, [Authable]);
