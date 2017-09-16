@@ -118,7 +118,7 @@ export class FoodService {
   generateForDay(code: string) {
     let food = [];
     for (var k = 0; k < 2; k++) {
-      let recipe = this.recipeService.getRandomRecipe().id;
+      let recipe = this.recipeService.getRandomRecipe().uuid;
       if (!food.includes(recipe)) {
         food.push(recipe)
       } else {

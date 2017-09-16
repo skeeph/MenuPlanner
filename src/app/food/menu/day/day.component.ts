@@ -69,8 +69,8 @@ export class DayComponent implements OnInit {
       return;
     }
     const food = selected.originalObject;
-    if (!this.food_ids.includes(food.id)) {
-      this.food_ids.push(food.id);
+    if (!this.food_ids.includes(food.uuid)) {
+      this.food_ids.push(food.uuid);
       this.foodService.updateDay(this.code, this.food_ids);
     }
     this.isAdding = false;
@@ -86,7 +86,7 @@ export class DayComponent implements OnInit {
   }
 
   randomFood(i) {
-    this.food_ids[i] = this.recipeService.getRandomRecipe().id;
+    this.food_ids[i] = this.recipeService.getRandomRecipe().uuid;
     this.foodService.updateDay(this.code, this.food_ids);
   }
 

@@ -1,7 +1,7 @@
 import { UUID } from 'angular2-uuid';
 
 export class Recipe {
-    id: string
+    uuid: string
     name: string
     imagePath: string
     description: string
@@ -13,7 +13,7 @@ export class Recipe {
 
     // TODO: Public and private recipes
     generateId(){
-        this.id = UUID.UUID()
+        this.uuid = UUID.UUID()
     }
 
     constructor(

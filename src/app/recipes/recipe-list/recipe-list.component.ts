@@ -35,20 +35,22 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   onSaveRecipes() {
     this.recipeService.saveRecipes();
-    this.recipeService.saveRecipesRest().subscribe(
-      (response) => { console.log(response); },
-      (err) => {
-        console.log(err);
-        this.notificationsService.error("Error", "Error while saving recipes to REST", {
-          showProgressBar: true,
-          timeOut: 0
-        });
-      }
-    );
-    this.notificationsService.success("Saved", "Recipes saved", {
-      showProgressBar: true,
-      timeOut: 0
-    });
+    this.recipeService.saveRecipesRest();
+    // FIXME: При сохранении нескольких вернуть все как было
+    // .subscribe(
+    //   (response) => { console.log(response); },
+    //   (err) => {
+    //     console.log(err);
+    //     this.notificationsService.error("Error", "Error while saving recipes to REST", {
+    //       showProgressBar: true,
+    //       timeOut: 0
+    //     });
+    //   }
+    // );
+    // this.notificationsService.success("Saved", "Recipes saved", {
+    //   showProgressBar: true,
+    //   timeOut: 0
+    // });;
   }
 
 }
