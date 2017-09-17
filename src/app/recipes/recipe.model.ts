@@ -5,6 +5,8 @@ export class Recipe {
     name: string
     imagePath: string
     description: string
+    publ: boolean;
+
     ingredients: {
         name: string,
         amount: number,
@@ -12,7 +14,7 @@ export class Recipe {
     }[];
 
     // TODO: Public and private recipes
-    generateId(){
+    generateId() {
         this.uuid = UUID.UUID()
     }
 
@@ -24,11 +26,18 @@ export class Recipe {
             amount: number,
             unit: string
         }[],
-        description?: string) {
+        description?: string,
+        publ?: boolean) {
         this.generateId();
         this.name = name;
         this.imagePath = imagePath;
         this.ingredients = ingredients;
         this.description = description;
-    }    
+
+        if (publ) {
+            this.publ = publ;
+        } else {
+            publ = false;
+        }
+    }
 }
