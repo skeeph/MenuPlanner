@@ -34,9 +34,9 @@ export class SettingsComponent implements OnInit {
       if (this.settingsForm.value.hasOwnProperty(key)) {
         var value = this.settingsForm.value[key];
         this.settingsService.set(key, value);
-        this.settingsService.saveSettings();
       }
     }
+    this.settingsService.saveSettings();
   }
 
 }
