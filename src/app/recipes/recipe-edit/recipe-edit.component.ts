@@ -36,12 +36,14 @@ export class RecipeEditComponent implements OnInit {
     let recipeImagePath = '';
     let recipeDescription = '';
     let recipeIngredients = new FormArray([]);
+    let recipePublic = false;
 
     if (this.editMode) {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
       recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
+      recipePublic = recipe.publ;
       if (recipe['ingredients']) {
         for (let ingredient of recipe.ingredients) {
           recipeIngredients.push(
@@ -51,7 +53,7 @@ export class RecipeEditComponent implements OnInit {
                 Validators.required,
                 Validators.pattern(/^[1-9]+[0-9]*.[0-9]*?$/)
               ]),
-              'unit': new FormControl(ingredient.unit, Validators.required)
+              'unit': new FormControl(ingredient.unit, Validators.required),
             })
           );
         }
@@ -62,6 +64,7 @@ export class RecipeEditComponent implements OnInit {
       'name': new FormControl(recipeName, Validators.required),
       'imagePath': new FormControl(recipeImagePath),
       'description': new FormControl(recipeDescription),
+      'public': new FormControl(recipePublic),
       'ingredients': recipeIngredients
     });
   }
@@ -71,7 +74,8 @@ export class RecipeEditComponent implements OnInit {
       formval.name,
       formval.imagePath,
       formval.ingredients,
-      formval.description
+      formval.description,
+      formval.public
     )
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id, recipe)
