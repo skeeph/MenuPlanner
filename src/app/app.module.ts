@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { Ng2CompleterModule } from "ng2-completer";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 
 
 import { AppComponent } from './app.component';
@@ -40,7 +41,8 @@ import { AuthGuard } from "app/auth/auth-guard.service";
     SettingsModule,
     SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
-    AuthModule
+    AuthModule,
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
   providers: [
     RecipeService,
