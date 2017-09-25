@@ -16,7 +16,7 @@ export class AuthService {
   ) { }
 
   signinUser(username: string, password: string) {
-    let url = "http://localhost:8000/api/v1/api-token-auth/";
+    let url = "https://menu.khabib.me/api/v1/api-token-auth/";
     let data = {
       "username": username,
       "password": password
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   signupUser(username: string, password: string) {
-    let url = "http://localhost:8000/api/v1/users/";
+    let url = "https://menu.khabib.me/api/v1/users/";
     let data = {
       "username": username,
       "password": password

@@ -99,7 +99,7 @@ export class RecipeService implements Authable{
     private notificationsService: NotificationsService,
   ) { }
 
-  private url = "http://localhost:8000/api/v1/recipes/";
+  private url = "https://menu.khabib.me/api/v1/recipes/";
 
 
   setToken(tk: string) {
