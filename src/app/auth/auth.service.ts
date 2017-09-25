@@ -53,7 +53,7 @@ export class AuthService {
     this.http.post(url, data).subscribe(
       (response) => {
         console.log(response);
-        this.notificationsService.error("Account created", "Please login", {
+        this.notificationsService.success("Account created", "Please login", {
           showProgressBar: true,
           timeOut: 0
         });

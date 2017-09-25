@@ -18,7 +18,7 @@ export class SettingsService implements Authable{
 
 
   private getUrl(): string {
-    return `http://menu.khabib.me/api/v1/settings/`
+    return `https://menu.khabib.me/api/v1/settings/`
   }
 
 
