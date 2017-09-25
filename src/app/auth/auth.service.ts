@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as firebase from "firebase";
 import { Router } from "@angular/router";
 import { NotificationsService } from "angular2-notifications";
 import { AfterAuthService } from "app/auth/after-auth.service";
