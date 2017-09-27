@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
   }
 
   onClear() {
-    this.foodService.clearFood();
+    this.foodService.clearFood(this.num);
   }
 
   onShoppingClick() {

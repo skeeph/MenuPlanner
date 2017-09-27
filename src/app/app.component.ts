@@ -3,6 +3,7 @@ import { RecipeService } from "app/recipes/recipe.service";
 import { FoodService } from "app/food/food.service";
 import { AuthService } from 'app/auth/auth.service';
 import { Angulartics2GoogleAnalytics } from "angulartics2";
+import { SettingsService } from "app/settings/settings.service";
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,11 @@ export class AppComponent implements OnInit {
     private recipeService: RecipeService,
     private foodService: FoodService,
     private authService: AuthService,
+    private settingsService:SettingsService,
     angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
     if (this.authService.isAuthed()) {
+      this.settingsService.loadSettings()
       this.recipeService.loadRecipes();
       this.foodService.loadFood();
     }

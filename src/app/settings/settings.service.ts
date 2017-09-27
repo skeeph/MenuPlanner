@@ -42,7 +42,7 @@ export class SettingsService implements Authable{
         }
       },
       (error) => {
-        console.log(error);
+        console.info(error);
       }
     );
   }

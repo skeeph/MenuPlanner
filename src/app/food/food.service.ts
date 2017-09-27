@@ -9,7 +9,7 @@ import { Mixin } from 'app/shared/mixin.decorator';
 
 @Injectable()
 @Mixin([Authable])
-export class FoodService implements Authable{
+export class FoodService implements Authable {
   weekNum = -1;
   food = {};
   foodsChanged = new EventEmitter<void>();
@@ -86,8 +86,8 @@ export class FoodService implements Authable{
     return `https://menu.khabib.me/api/v1/menu/`
   }
 
-  tk: string=null;
-  getAuthHeader:()=>RequestOptions;
+  tk: string = null;
+  getAuthHeader: () => RequestOptions;
 
   loadRest() {
     let auth = this.getAuthHeader();
@@ -111,6 +111,7 @@ export class FoodService implements Authable{
       if (this.food.hasOwnProperty(week)) {
         var menu = this.food[week];
         menu['num'] = week;
+        this.deleteRest(parseInt(week));
         this.http.post(this.getUrl(), menu, auth)
           .subscribe(
           (response: Response) => { console.log(response) },
@@ -142,10 +143,21 @@ export class FoodService implements Authable{
     this.foodsChanged.emit();
   }
 
-  clearFood() {
-    this.food[this.weekNum] = {}
-    localStorage.removeItem(this.getCode())
-    this.saveRest();
+  private deleteRest(num: number) {
+    this.http.delete(`${this.getUrl()}${num}/`, this.getAuthHeader())
+      .subscribe(
+      (response: Response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }
+  clearFood(num: number) {
+    this.food[num] = {}
+    localStorage.removeItem(this.getCode(num))
+    this.deleteRest(num);
     this.foodsChanged.emit();
   }
 
