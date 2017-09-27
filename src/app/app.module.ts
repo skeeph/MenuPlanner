@@ -20,7 +20,6 @@ import { TodoistService } from "app/food/todoist.service";
 import { FoodModule } from "app/food/food.module";
 import { SettingsModule } from "app/settings/settings.module";
 import { SettingsService } from "app/settings/settings.service";
-import { SettingsGuardService } from "app/settings/settings-guard.service";
 import { AuthModule } from "app/auth/auth.module";
 import { AuthService } from "app/auth/auth.service";
 import { AuthGuard } from "app/auth/auth-guard.service";
@@ -49,7 +48,6 @@ import { AuthGuard } from "app/auth/auth-guard.service";
     FoodService,
     TodoistService,
     SettingsService,
-    SettingsGuardService,
     AuthService,
     AuthGuard
   ],
