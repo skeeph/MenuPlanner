@@ -4,6 +4,8 @@ import { RecipeService } from "app/recipes/recipe.service";
 import { TodoistService } from "app/food/todoist.service";
 import currentWeekNumber = require('current-week-number');
 import { NotificationsService } from "angular2-notifications";
+import { SettingsService } from "app/settings/settings.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -30,7 +32,9 @@ export class MenuComponent implements OnInit {
     private foodService: FoodService,
     private recipeService: RecipeService,
     private todoistService: TodoistService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private settingsService: SettingsService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -67,9 +71,14 @@ export class MenuComponent implements OnInit {
   }
 
   onShoppingClick() {
-    let products = this.foodService.getProducts();
-    this.todoistService.saveTasks(products);
-    console.log(products);
+    if (this.settingsService.settingsCompleted()) {
+      let products = this.foodService.getProducts();
+      this.todoistService.saveTasks(products);
+      console.log(products);
+    } else {
+      this.router.navigate(["/settings"]);
+      this.notificationsService.warn("Bad settings", "Please set shopping list project name and Todoist API Key")
+    }
 
   }
 }
